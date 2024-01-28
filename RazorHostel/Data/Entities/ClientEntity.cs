@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hostel.DataAccess.Entities
 {
@@ -12,6 +13,7 @@ namespace Hostel.DataAccess.Entities
 
         public string? Patronymic { get; set; }
 
+        [NotMapped]
         public string FullName => $"{LastName} {FirstName} {Patronymic}";
 
         [EmailAddress]
@@ -19,8 +21,6 @@ namespace Hostel.DataAccess.Entities
 
         [Phone]
         public string PhoneNumber { get; set; }
-
-        public string Role { get; set; }
 
         public List<BookingEntity>? Bookings { get; set; }
     }
