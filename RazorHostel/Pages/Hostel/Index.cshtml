@@ -1,0 +1,60 @@
+﻿@page
+@model RazorHostel.Pages.Hostel.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Hostels</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HostelEntity[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HostelEntity[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HostelEntity[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HostelEntity[0].PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HostelEntity[0].Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.HostelEntity) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.IdHostel">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IdHostel">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IdHostel">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

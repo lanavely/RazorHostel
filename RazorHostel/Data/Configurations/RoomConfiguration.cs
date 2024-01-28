@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Hostel.DataAccess.Configurations
 {
-    public class RoomConfiguration : IEntityTypeConfiguration<Room>
+    public class RoomConfiguration : IEntityTypeConfiguration<RoomEntity>
     {
-        public void Configure(EntityTypeBuilder<Room> builder)
+        public void Configure(EntityTypeBuilder<RoomEntity> builder)
         {
             builder.HasKey(x => x.IdRoom);
 

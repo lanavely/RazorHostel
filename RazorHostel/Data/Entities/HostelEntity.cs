@@ -1,6 +1,6 @@
 ﻿namespace Hostel.DataAccess.Entities
 {
-    public class Hostel
+    public class HostelEntity
     {
         public int IdHostel { get; set; }
 
@@ -14,6 +14,6 @@
 
         public string Email { get; set; }
 
-        public List<Room> Rooms { get; set; }
+        public List<RoomEntity>? Rooms { get; set; }
     }
 }

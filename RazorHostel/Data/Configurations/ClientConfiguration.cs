@@ -4,11 +4,11 @@ using Hostel.DataAccess.Entities;
 
 namespace Hostel.DataAccess.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<Client>
+    public class ClientConfiguration : IEntityTypeConfiguration<ClientEntity>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<ClientEntity> builder)
         {
-            builder.HasKey(x => x.IdUser);
+            builder.HasKey(x => x.IdClient);
 
             builder.Property(x => x.FirstName).HasMaxLength(100);
             builder.Property(x => x.LastName).HasMaxLength(100);
@@ -18,10 +18,10 @@ namespace Hostel.DataAccess.Configurations
             builder.Property(x => x.Role).HasMaxLength(50);
 
             builder.HasMany(x => x.Bookings)
-                .WithOne(x => x.User)
+                .WithOne(x => x.Client)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasPrincipalKey(x => x.IdUser)
-                .HasForeignKey(x => x.IdUser)
+                .HasPrincipalKey(x => x.IdClient)
+                .HasForeignKey(x => x.IdClient)
                 .IsRequired();
         }
     }

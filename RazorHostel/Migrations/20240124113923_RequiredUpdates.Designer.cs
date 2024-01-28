@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RazorHostel.Data;
@@ -11,9 +12,11 @@ using RazorHostel.Data;
 namespace RazorHostel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240124113923_RequiredUpdates")]
+    partial class RequiredUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,10 @@ namespace RazorHostel.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("IdClient")
+                    b.Property<int>("IdRoom")
                         .HasColumnType("integer");
 
-                    b.Property<int>("IdRoom")
+                    b.Property<int>("IdUser")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
@@ -48,20 +51,20 @@ namespace RazorHostel.Migrations
 
                     b.HasKey("IdBooking");
 
-                    b.HasIndex("IdClient");
-
                     b.HasIndex("IdRoom");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("Hostel.DataAccess.Entities.ClientEntity", b =>
                 {
-                    b.Property<int>("IdClient")
+                    b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdClient"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdUser"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -92,9 +95,9 @@ namespace RazorHostel.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("IdClient");
+                    b.HasKey("IdUser");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Hostel.DataAccess.Entities.HostelEntity", b =>
@@ -161,9 +164,6 @@ namespace RazorHostel.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
 
                     b.Property<decimal>("Square")
                         .HasMaxLength(15)
@@ -378,21 +378,21 @@ namespace RazorHostel.Migrations
 
             modelBuilder.Entity("Hostel.DataAccess.Entities.BookingEntity", b =>
                 {
-                    b.HasOne("Hostel.DataAccess.Entities.ClientEntity", "Client")
-                        .WithMany("Bookings")
-                        .HasForeignKey("IdClient")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Hostel.DataAccess.Entities.RoomEntity", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("IdRoom")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.HasOne("Hostel.DataAccess.Entities.ClientEntity", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Hostel.DataAccess.Entities.RoomEntity", b =>

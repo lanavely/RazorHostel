@@ -11,18 +11,18 @@ namespace RazorHostel.Data
             : base(options)
         {
         }
-        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomEntity> Rooms { get; set; }
 
-        public DbSet<Client> Users { get; set; }
+        public DbSet<ClientEntity> Clients { get; set; }
 
-        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingEntity> Bookings { get; set; }
 
-        public DbSet<Hostel.DataAccess.Entities.Hostel> Hostels { get; set; }
+        public DbSet<HostelEntity> Hostels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RoomConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientConfiguration());
             modelBuilder.ApplyConfiguration(new BookingConfiguration());
             modelBuilder.ApplyConfiguration(new HostelConfiguration());
 

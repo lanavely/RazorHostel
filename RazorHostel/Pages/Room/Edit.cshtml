@@ -1,0 +1,65 @@
+﻿@page
+@model RazorHostel.Pages.Room.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RoomEntity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RoomEntity.IdRoom" />
+            <div class="form-group">
+                <label asp-for="RoomEntity.Comment" class="control-label"></label>
+                <input asp-for="RoomEntity.Comment" class="form-control" />
+                <span asp-validation-for="RoomEntity.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.Description" class="control-label"></label>
+                <input asp-for="RoomEntity.Description" class="form-control" />
+                <span asp-validation-for="RoomEntity.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.Name" class="control-label"></label>
+                <input asp-for="RoomEntity.Name" class="form-control" />
+                <span asp-validation-for="RoomEntity.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.Capacity" class="control-label"></label>
+                <input asp-for="RoomEntity.Capacity" class="form-control" />
+                <span asp-validation-for="RoomEntity.Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.Square" class="control-label"></label>
+                <input asp-for="RoomEntity.Square" class="form-control" />
+                <span asp-validation-for="RoomEntity.Square" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.Price" class="control-label"></label>
+                <input asp-for="RoomEntity.Price" class="form-control" />
+                <span asp-validation-for="RoomEntity.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomEntity.IdHostel" class="control-label"></label>
+                <select asp-for="RoomEntity.IdHostel" class="form-control" asp-items="ViewBag.IdHostel"></select>
+                <span asp-validation-for="RoomEntity.IdHostel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

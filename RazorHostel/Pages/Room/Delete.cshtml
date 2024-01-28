@@ -1,0 +1,64 @@
+﻿@page
+@model RazorHostel.Pages.Room.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>RoomEntity</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Comment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Capacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Capacity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Square)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Square)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RoomEntity.Hostel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RoomEntity.Hostel.IdHostel)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="RoomEntity.IdRoom" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
