@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoomEntity[0].Comment)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.RoomEntity[0].Description)
             </th>
             <th>
@@ -34,15 +31,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.RoomEntity[0].Hostel)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomEntity[0].Comment)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.RoomEntity) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
@@ -59,7 +56,10 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hostel.Name)
+                  <a asp-page="/Hostel/Details" asp-route-id="@item.IdRoom">@item.Hostel.Name</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.IdRoom">Edit</a> |

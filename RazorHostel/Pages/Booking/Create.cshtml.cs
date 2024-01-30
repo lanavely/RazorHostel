@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Hostel.DataAccess.Entities;
 using RazorHostel.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace RazorHostel.Pages.Booking
 {
@@ -21,19 +22,28 @@ namespace RazorHostel.Pages.Booking
 
         public IActionResult OnGet()
         {
-        ViewData["IdRoom"] = new SelectList(_context.Rooms, "IdRoom", "Name");
-        ViewData["IdClient"] = new SelectList(_context.Clients, "IdClient", "FullName");
+            ViewData["IdRoom"] = new SelectList(_context.Rooms, "IdRoom", "Name");
+            ViewData["IdClient"] = new SelectList(_context.Clients, "IdClient", "FullName");
             return Page();
         }
 
         [BindProperty]
         public BookingEntity BookingEntity { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Bookings == null || BookingEntity == null)
+            if (!ModelState.IsValid || _context.Bookings == null || BookingEntity == null || BookingEntity.StartDate > BookingEntity.EndDate)
+            {
+                return Page();
+            }
+
+            // Ищем пересечения
+            var busyBooking = await _context.Bookings.FirstOrDefaultAsync(b => b.IdRoom == BookingEntity.IdRoom &&
+                b.StartDate <= BookingEntity.EndDate && b.EndDate >= BookingEntity.StartDate);
+
+            if (busyBooking != null)
             {
                 return Page();
             }

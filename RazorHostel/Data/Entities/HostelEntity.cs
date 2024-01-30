@@ -1,4 +1,6 @@
-﻿namespace Hostel.DataAccess.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Hostel.DataAccess.Entities
 {
     public class HostelEntity
     {
@@ -10,8 +12,10 @@
 
         public string Address { get; set; }
 
+        [Phone]
         public string PhoneNumber { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         public List<RoomEntity>? Rooms { get; set; }

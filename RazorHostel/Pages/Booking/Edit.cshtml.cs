@@ -36,8 +36,8 @@ namespace RazorHostel.Pages.Booking
                 return NotFound();
             }
             BookingEntity = bookingentity;
-           ViewData["IdRoom"] = new SelectList(_context.Rooms, "IdRoom", "Name");
-           ViewData["IdClient"] = new SelectList(_context.Users, "IdClient", "FullName");
+            ViewData["IdRoom"] = new SelectList(_context.Rooms, "IdRoom", "Name");
+            ViewData["IdClient"] = new SelectList(_context.Clients, "IdClient", "FullName");
             return Page();
         }
 

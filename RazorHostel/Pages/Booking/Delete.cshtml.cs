@@ -29,7 +29,10 @@ namespace RazorHostel.Pages.Booking
                 return NotFound();
             }
 
-            var bookingentity = await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
+            var bookingentity = await _context.Bookings
+                .Include(b => b.Room)
+                .Include(b => b.Client)
+                .FirstOrDefaultAsync(m => m.IdBooking == id);
 
             if (bookingentity == null)
             {
