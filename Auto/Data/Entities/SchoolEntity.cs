@@ -18,7 +18,7 @@ namespace Auto.Data.Entities
         [EmailAddress]
         public string Email { get; set; }
 
-        public List<User>? Users { get; set; }
+        public List<UserEntity>? Users { get; set; }
         
         public List<BookingEntity>? Bookings { get; set; }
     }

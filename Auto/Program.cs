@@ -1,4 +1,6 @@
 using Auto.Data;
+using Auto.Data.Entities;
+using Auto.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +17,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(contextBuilder =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
@@ -39,5 +43,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var userManager = services.GetRequiredService<UserManager<UserEntity>>();
+var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+await RoleInitializer.InitializeAsync(userManager, rolesManager);
 
 app.Run();

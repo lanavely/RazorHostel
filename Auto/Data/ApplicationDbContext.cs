@@ -5,14 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auto.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<UserEntity>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-
-        public DbSet<User> Users { get; set; }
 
         public DbSet<BookingEntity> Bookings { get; set; }
 
