@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Auto.Data;
 using Auto.Data.Entities;
 
 namespace Auto.Pages.Booking
@@ -28,7 +23,10 @@ namespace Auto.Pages.Booking
                 return NotFound();
             }
 
-            var bookingentity = await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
+            var bookingentity = await _context.Bookings.Include(b => b.User)
+                .Include(b => b.School)
+                .FirstOrDefaultAsync(m => m.IdBooking == id);
+
             if (bookingentity == null)
             {
                 return NotFound();

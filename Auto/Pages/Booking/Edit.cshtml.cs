@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Auto.Data;
 using Auto.Data.Entities;
 
 namespace Auto.Pages.Booking
@@ -25,19 +20,19 @@ namespace Auto.Pages.Booking
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var bookingentity =  await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
-            if (bookingentity == null)
+            var bookingEntity =  await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
+            if (bookingEntity == null)
             {
                 return NotFound();
             }
-            BookingEntity = bookingentity;
-           ViewData["IdSchool"] = new SelectList(_context.Schools, "IdSchool", "IdSchool");
-           ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id");
+            BookingEntity = bookingEntity;
+            ViewData["IdSchool"] = new SelectList(_context.Schools, "IdSchool", "Name");
+            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName");
             return Page();
         }
 

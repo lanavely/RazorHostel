@@ -47,6 +47,7 @@
     <_ContentIncludedByDefault Remove="Pages\Room\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Room\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Room\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Account\Manage\Index.cshtml" />
   </ItemGroup>
 
 </Project>

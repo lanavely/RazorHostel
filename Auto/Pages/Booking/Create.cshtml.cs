@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Auto.Data;
 using Auto.Data.Entities;
 
 namespace Auto.Pages.Booking
 {
     public class CreateModel : PageModel
     {
-        private readonly Auto.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public CreateModel(Auto.Data.ApplicationDbContext context)
+        public CreateModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["IdSchool"] = new SelectList(_context.Schools, "IdSchool", "IdSchool");
-        ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdSchool"] = new SelectList(_context.Schools, "IdSchool", "Name");
+            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName");
             return Page();
         }
 
@@ -33,7 +28,7 @@ namespace Auto.Pages.Booking
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Bookings == null || BookingEntity == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }

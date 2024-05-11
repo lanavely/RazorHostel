@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Auto.Data;
 using Auto.Data.Entities;
 
 namespace Auto.Pages.Booking
@@ -24,35 +19,35 @@ namespace Auto.Pages.Booking
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var bookingentity = await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
+            var bookingEntity = await _context.Bookings.FirstOrDefaultAsync(m => m.IdBooking == id);
 
-            if (bookingentity == null)
+            if (bookingEntity == null)
             {
                 return NotFound();
             }
             else 
             {
-                BookingEntity = bookingentity;
+                BookingEntity = bookingEntity;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var bookingentity = await _context.Bookings.FindAsync(id);
+            var bookingEntity = await _context.Bookings.FindAsync(id);
 
-            if (bookingentity != null)
+            if (bookingEntity != null)
             {
-                BookingEntity = bookingentity;
+                BookingEntity = bookingEntity;
                 _context.Bookings.Remove(BookingEntity);
                 await _context.SaveChangesAsync();
             }

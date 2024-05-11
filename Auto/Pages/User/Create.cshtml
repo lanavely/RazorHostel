@@ -5,28 +5,41 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Создать</h1>
+<h1>Create</h1>
 
-<h4>Пользователи</h4>
+<h4>BookingEntity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form id="registerForm" method="post">
+            <h2>Create a new account.</h2>
+            <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="Users.UserName" class="control-label"></label>
-                <input asp-for="Users.UserName" class="form-control" />
-                <span asp-validation-for="Users.UserName" class="text-danger"></span>
+                <label asp-for="UserModel.Username"></label>
+                <input asp-for="UserModel.Username" class="form-control" />
+                <span asp-validation-for="UserModel.Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Users.PhoneNumber" class="control-label"></label>
-                <input asp-for="Users.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Users.PhoneNumber" class="text-danger"></span>
+                <label asp-for="UserModel.PhoneNumber"></label>
+                <input asp-for="UserModel.PhoneNumber" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="UserModel.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Users.Email" class="control-label"></label>
-                <input asp-for="Users.Email" class="form-control" />
-                <span asp-validation-for="Users.Email" class="text-danger"></span>
+                <label asp-for="UserModel.Email"></label>
+                <input asp-for="UserModel.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="UserModel.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserModel.Password"></label>
+                <input asp-for="UserModel.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="UserModel.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserModel.ConfirmPassword"></label>
+                <input asp-for="UserModel.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="UserModel.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -36,7 +49,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Назад</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -1,61 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using Auto.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Auto.Data;
-using Auto.Data.Entities;
 
 namespace Auto.Pages.User
 {
     public class DeleteModel : PageModel
     {
-        private readonly Auto.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public DeleteModel(Auto.Data.ApplicationDbContext context)
+        public DeleteModel(
+            Data.ApplicationDbContext context,
+            UserManager<UserEntity> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        [BindProperty]
-      public Users Users { get; set; } = default!;
+      [BindProperty]
+      public UserEntity UserEntity { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var Users = await _context.Users.FirstOrDefaultAsync(m => m.IdUser == id);
+            var user = await _userManager.FindByIdAsync(id);
 
-            if (Users == null)
+            if (user == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Users = Users;
-            }
+
+            UserEntity = user;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(string? id)
         {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
-            var Users = await _context.Users.FindAsync(id);
-
-            if (Users != null)
-            {
-                Users = Users;
-                _context.Users.Remove(Users);
-                await _context.SaveChangesAsync();
-            }
+            var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(id));
 
             return RedirectToPage("./Index");
         }

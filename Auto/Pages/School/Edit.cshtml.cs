@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Auto.Data;
 using Auto.Data.Entities;
 
 namespace Auto.Pages.School
@@ -25,7 +19,7 @@ namespace Auto.Pages.School
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Schools == null)
+            if (id == null)
             {
                 return NotFound();
             }

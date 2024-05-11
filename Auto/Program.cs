@@ -2,7 +2,6 @@ using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Roles;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +17,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(contextBuilder =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddDefaultIdentity<UserEntity>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Password = new PasswordOptions()
+        {
+            RequiredLength = 3,
+            RequireDigit = true,
+            RequireLowercase = false,
+            RequireUppercase = false,
+            RequiredUniqueChars = 3,
+            RequireNonAlphanumeric = false
+        };
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();

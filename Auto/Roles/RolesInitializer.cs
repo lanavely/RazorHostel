@@ -14,7 +14,7 @@ public static class RoleInitializer
         
         if (await roleManager.FindByNameAsync("instructor") == null)
         {
-            await roleManager.CreateAsync(new IdentityRole("instructor"));
+                await roleManager.CreateAsync(new IdentityRole("instructor"));
         }
 
         if (await roleManager.FindByNameAsync("student") == null)
@@ -23,11 +23,10 @@ public static class RoleInitializer
         }
 
         var adminEmail = "admin@gmail.com";
-        var password = "123456";
         if (await userManager.FindByNameAsync(adminEmail) == null)
         {
-            var admin = new UserEntity { Email = adminEmail, UserName = adminEmail };
-            var result = await userManager.CreateAsync(admin, password);
+            var admin = new UserEntity { Email = adminEmail, UserName = adminEmail, PhoneNumber = "+79032432523"};
+            var result = await userManager.CreateAsync(admin, "123456");
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(admin, "admin");
