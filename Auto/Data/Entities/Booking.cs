@@ -1,6 +1,6 @@
 ﻿namespace Auto.Data.Entities
 {
-    public class BookingEntity
+    public class Booking
     {
         public int IdBooking { get; set; }
 

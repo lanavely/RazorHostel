@@ -16,7 +16,7 @@ namespace Auto.Pages.Booking
         }
 
         [BindProperty]
-        public BookingEntity BookingEntity { get; set; } = default!;
+        public Data.Entities.Booking Booking { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,7 +30,7 @@ namespace Auto.Pages.Booking
             {
                 return NotFound();
             }
-            BookingEntity = bookingEntity;
+            Booking = bookingEntity;
             ViewData["IdSchool"] = new SelectList(_context.Schools, "IdSchool", "Name");
             ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName");
             return Page();
@@ -45,7 +45,7 @@ namespace Auto.Pages.Booking
                 return Page();
             }
 
-            _context.Attach(BookingEntity).State = EntityState.Modified;
+            _context.Attach(Booking).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +53,7 @@ namespace Auto.Pages.Booking
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookingEntityExists(BookingEntity.IdBooking))
+                if (!BookingEntityExists(Booking.IdBooking))
                 {
                     return NotFound();
                 }

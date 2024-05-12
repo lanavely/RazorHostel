@@ -15,7 +15,7 @@ namespace Auto.Pages.Booking
         }
 
         [BindProperty]
-      public BookingEntity BookingEntity { get; set; } = default!;
+      public Data.Entities.Booking Booking { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,7 +32,7 @@ namespace Auto.Pages.Booking
             }
             else 
             {
-                BookingEntity = bookingEntity;
+                Booking = bookingEntity;
             }
             return Page();
         }
@@ -47,8 +47,8 @@ namespace Auto.Pages.Booking
 
             if (bookingEntity != null)
             {
-                BookingEntity = bookingEntity;
-                _context.Bookings.Remove(BookingEntity);
+                Booking = bookingEntity;
+                _context.Bookings.Remove(Booking);
                 await _context.SaveChangesAsync();
             }
 

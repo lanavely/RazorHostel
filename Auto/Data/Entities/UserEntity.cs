@@ -6,6 +6,16 @@ namespace Auto.Data.Entities
     {
         public int IdSchool { get; set; }
 
-        public List<BookingEntity>? Bookings { get; set; }
+        public string FirstName { get; set; }
+        
+        public string LastName { get; set; }
+
+        public string Patronymic { get; set; }
+
+        public DateOnly Birthdate { get; set; }
+
+        public string GroupNumber { get; set; }
+        
+        public List<Booking>? Bookings { get; set; }
     }
 }

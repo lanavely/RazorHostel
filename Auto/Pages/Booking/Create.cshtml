@@ -14,27 +14,27 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BookingEntity.IdUser" class="control-label"></label>
-                <select asp-for="BookingEntity.IdUser" class ="form-control" asp-items="ViewBag.IdUser"></select>
+                <label asp-for="Booking.IdUser" class="control-label"></label>
+                <select asp-for="Booking.IdUser" class ="form-control" asp-items="ViewBag.IdUser"></select>
             </div>
             <div class="form-group">
-                <label asp-for="BookingEntity.IdSchool" class="control-label"></label>
-                <select asp-for="BookingEntity.IdSchool" class ="form-control" asp-items="ViewBag.IdSchool"></select>
+                <label asp-for="Booking.IdSchool" class="control-label"></label>
+                <select asp-for="Booking.IdSchool" class ="form-control" asp-items="ViewBag.IdSchool"></select>
             </div>
             <div class="form-group">
-                <label asp-for="BookingEntity.Comment" class="control-label"></label>
-                <input asp-for="BookingEntity.Comment" class="form-control" />
-                <span asp-validation-for="BookingEntity.Comment" class="text-danger"></span>
+                <label asp-for="Booking.Comment" class="control-label"></label>
+                <input asp-for="Booking.Comment" class="form-control" />
+                <span asp-validation-for="Booking.Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BookingEntity.StartDate" class="control-label"></label>
-                <input asp-for="BookingEntity.StartDate" class="form-control" />
-                <span asp-validation-for="BookingEntity.StartDate" class="text-danger"></span>
+                <label asp-for="Booking.StartDate" class="control-label"></label>
+                <input asp-for="Booking.StartDate" class="form-control" />
+                <span asp-validation-for="Booking.StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BookingEntity.EndDate" class="control-label"></label>
-                <input asp-for="BookingEntity.EndDate" class="form-control" />
-                <span asp-validation-for="BookingEntity.EndDate" class="text-danger"></span>
+                <label asp-for="Booking.EndDate" class="control-label"></label>
+                <input asp-for="Booking.EndDate" class="form-control" />
+                <span asp-validation-for="Booking.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

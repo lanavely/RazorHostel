@@ -20,6 +20,6 @@ namespace Auto.Data.Entities
 
         public List<UserEntity>? Users { get; set; }
         
-        public List<BookingEntity>? Bookings { get; set; }
+        public List<Booking>? Bookings { get; set; }
     }
 }

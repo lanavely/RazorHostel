@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auto.Data.Configurations
 {
-    public class BookingConfiguration : IEntityTypeConfiguration<BookingEntity>
+    public class BookingConfiguration : IEntityTypeConfiguration<Booking>
     {
-        public void Configure(EntityTypeBuilder<BookingEntity> builder)
+        public void Configure(EntityTypeBuilder<Booking> builder)
         {
             builder.HasKey(x => x.IdBooking);
 

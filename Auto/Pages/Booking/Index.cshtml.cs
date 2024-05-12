@@ -13,7 +13,7 @@ namespace Auto.Pages.Booking
             _context = context;
         }
 
-        public IList<BookingEntity> BookingEntity { get;set; } = default!;
+        public IList<Data.Entities.Booking> BookingEntity { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

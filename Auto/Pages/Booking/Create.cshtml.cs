@@ -22,7 +22,7 @@ namespace Auto.Pages.Booking
         }
 
         [BindProperty]
-        public BookingEntity BookingEntity { get; set; } = default!;
+        public Data.Entities.Booking Booking { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -33,7 +33,7 @@ namespace Auto.Pages.Booking
                 return Page();
             }
 
-            _context.Bookings.Add(BookingEntity);
+            _context.Bookings.Add(Booking);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

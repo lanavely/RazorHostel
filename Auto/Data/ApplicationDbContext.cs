@@ -12,7 +12,7 @@ namespace Auto.Data
         {
         }
 
-        public DbSet<BookingEntity> Bookings { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         public DbSet<SchoolEntity> Schools { get; set; }
 

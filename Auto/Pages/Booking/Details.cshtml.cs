@@ -14,7 +14,7 @@ namespace Auto.Pages.Booking
             _context = context;
         }
 
-      public BookingEntity BookingEntity { get; set; } = default!; 
+      public Data.Entities.Booking Booking { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,7 +33,7 @@ namespace Auto.Pages.Booking
             }
             else 
             {
-                BookingEntity = bookingentity;
+                Booking = bookingentity;
             }
             return Page();
         }
