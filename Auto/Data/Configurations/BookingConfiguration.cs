@@ -8,14 +8,14 @@ namespace Auto.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
-            builder.HasKey(x => x.IdBooking);
+            builder.HasKey(x => x.BookingId);
 
             builder.Property(x => x.Comment).HasMaxLength(1000);
 
             builder.HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
                 .HasPrincipalKey(k => k.Id)
-                .HasForeignKey(k => k.IdUser)
+                .HasForeignKey(k => k.UserId)
                 .IsRequired();
             
             builder.HasOne(b => b.School)

@@ -2,9 +2,9 @@
 
 namespace Auto.Data.Entities
 {
-    public class UserEntity : IdentityUser
+    public class AppUser : IdentityUser
     {
-        public int IdSchool { get; set; }
+        public int SchoolId { get; set; }
 
         public string FirstName { get; set; }
         

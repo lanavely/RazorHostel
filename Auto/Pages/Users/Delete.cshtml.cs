@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auto.Pages.User
+namespace Auto.Pages.Users
 {
     public class DeleteModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly UserManager<UserEntity> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public DeleteModel(
             Data.ApplicationDbContext context,
-            UserManager<UserEntity> userManager)
+            UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
       [BindProperty]
-      public UserEntity UserEntity { get; set; } = default!;
+      public AppUser AppUser { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string? id)
         {
@@ -37,7 +37,7 @@ namespace Auto.Pages.User
                 return NotFound();
             }
 
-            UserEntity = user;
+            AppUser = user;
             return Page();
         }
 

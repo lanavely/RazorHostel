@@ -6,16 +6,16 @@ using Auto.Data;
 using Auto.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Auto.Pages.User
+namespace Auto.Pages.Users
 {
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<UserEntity> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public CreateModel(
             ApplicationDbContext context,
-            UserManager<UserEntity> userManager)
+            UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -40,7 +40,7 @@ namespace Auto.Pages.User
                 return Page();
             }
 
-            var user = new UserEntity()
+            var user = new AppUser()
             {
                 UserName = UserModel.Username,
                 Email = UserModel.Email,

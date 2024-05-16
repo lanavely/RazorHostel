@@ -48,6 +48,11 @@
     <_ContentIncludedByDefault Remove="Pages\Room\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Room\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Account\Manage\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Schools\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Schools\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Schools\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Schools\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Schools\Index.cshtml" />
   </ItemGroup>
 
 </Project>

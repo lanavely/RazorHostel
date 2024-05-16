@@ -2,17 +2,17 @@
 {
     public class Booking
     {
-        public int IdBooking { get; set; }
+        public int BookingId { get; set; }
 
         public string IdUser { get; set; }
         
-        public int IdSchool { get; set; }
+        public int SchoolId { get; set; }
         
         public string? Comment { get; set; }
 
-        public UserEntity? User { get; set; }
+        public AppUser? User { get; set; }
         
-        public SchoolEntity? School { get; set; }
+        public School? School { get; set; }
 
         public DateTime StartDate { get; set; }
 

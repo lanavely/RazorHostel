@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auto.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<UserEntity>
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -14,7 +14,7 @@ namespace Auto.Data
 
         public DbSet<Booking> Bookings { get; set; }
 
-        public DbSet<SchoolEntity> Schools { get; set; }
+        public DbSet<School> Schools { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

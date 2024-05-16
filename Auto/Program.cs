@@ -17,7 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(contextBuilder =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddDefaultIdentity<UserEntity>(options =>
+    .AddDefaultIdentity<AppUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
         options.Password = new PasswordOptions()
@@ -57,7 +57,7 @@ app.MapRazorPages();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
-var userManager = services.GetRequiredService<UserManager<UserEntity>>();
+var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 await RoleInitializer.InitializeAsync(userManager, rolesManager);
 

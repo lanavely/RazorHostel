@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auto.Data.Configurations
 {
-    public class SchoolConfiguration : IEntityTypeConfiguration<SchoolEntity>
+    public class SchoolConfiguration : IEntityTypeConfiguration<School>
     {
-        public void Configure(EntityTypeBuilder<SchoolEntity> builder)
+        public void Configure(EntityTypeBuilder<School> builder)
         {
             builder.HasKey(x => x.IdSchool);
 

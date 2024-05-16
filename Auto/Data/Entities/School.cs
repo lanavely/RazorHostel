@@ -2,9 +2,9 @@
 
 namespace Auto.Data.Entities
 {
-    public class SchoolEntity
+    public class School
     {
-        public int IdSchool { get; set; }
+        public int SchoolId { get; set; }
 
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace Auto.Data.Entities
         [EmailAddress]
         public string Email { get; set; }
 
-        public List<UserEntity>? Users { get; set; }
+        public List<AppUser>? Users { get; set; }
         
         public List<Booking>? Bookings { get; set; }
     }
