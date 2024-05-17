@@ -26,7 +26,7 @@ namespace Auto.Data
 
         public DbSet<Question> Questions { get; set; }
         
-        public DbSet<QuestionCategory> QuestionCategories { get; set; }
+        public DbSet<Category> QuestionCategories { get; set; }
  
         public DbSet<Test> Tests { get; set; }
         
@@ -41,7 +41,7 @@ namespace Auto.Data
             
             modelBuilder.ApplyConfiguration(new AnswerOptionConfiguration());
             modelBuilder.ApplyConfiguration(new ImageDataConfiguration());
-            modelBuilder.ApplyConfiguration(new QuestionCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new QuestionConfiguration());
             modelBuilder.ApplyConfiguration(new TestConfiguration());
             modelBuilder.ApplyConfiguration(new TestQuestionConfiguration());

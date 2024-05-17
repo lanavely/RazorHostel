@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Auto.Data.Configurations.Tests;
 
-public class QuestionCategoryConfiguration : IEntityTypeConfiguration<QuestionCategory>
+public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<QuestionCategory> builder)
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.HasKey(c => c.CategoryId);
     }

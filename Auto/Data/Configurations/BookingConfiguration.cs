@@ -11,7 +11,7 @@ namespace Auto.Data.Configurations
             builder.HasKey(x => x.BookingId);
 
             builder.HasOne(b => b.Client)
-                .WithMany(u => u.Bookings)
+                .WithMany(u => u.ClientBookings)
                 .HasForeignKey(k => k.ClientId)
                 .IsRequired();
             
@@ -21,7 +21,7 @@ namespace Auto.Data.Configurations
                 .IsRequired();
 
             builder.HasOne(b => b.Teacher)
-                .WithMany(t => t.Bookings)
+                .WithMany(t => t.TeacherBookings)
                 .HasForeignKey(b => b.TeacherId)
                 .IsRequired();
         }

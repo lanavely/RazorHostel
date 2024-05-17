@@ -4,7 +4,7 @@ public class AnswerOption
 {
     public int AnswerId { get; set; }
 
-    public bool IsTrue { get; set; }
+    public bool IsCorrect { get; set; }
 
     public string Text { get; set; }
     
