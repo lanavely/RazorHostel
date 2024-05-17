@@ -16,7 +16,7 @@ public class TestService
 
     public async Task<Test> GetTestAsync()
     {
-        var categories = await _context.QuestionCategories.ToListAsync();
+        var categories = await _context.Categories.ToListAsync();
         var questions = await _context.Questions
             .Include(c => c.Category)
             .Include(c => c.AnswerOptions)

@@ -26,8 +26,8 @@ namespace Auto.Data
 
         public DbSet<Question> Questions { get; set; }
         
-        public DbSet<Category> QuestionCategories { get; set; }
- 
+        public DbSet<Category> Categories { get; set; }
+        
         public DbSet<Test> Tests { get; set; }
         
         public DbSet<TestQuestion> TestQuestions { get; set; }

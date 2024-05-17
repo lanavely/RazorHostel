@@ -1,8 +1,10 @@
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Importer;
 using Auto.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +61,14 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+if (false)
+{
+    var importer = new Importer(services.GetRequiredService<ApplicationDbContext>());
+    await importer.ImportAsync();
+    return;
+}
+
 await RoleInitializer.InitializeAsync(userManager, rolesManager);
 
 app.Run();
