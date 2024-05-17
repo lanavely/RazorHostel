@@ -62,13 +62,6 @@ var services = scope.ServiceProvider;
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-if (false)
-{
-    var importer = new Importer(services.GetRequiredService<ApplicationDbContext>());
-    await importer.ImportAsync();
-    return;
-}
-
 await RoleInitializer.InitializeAsync(userManager, rolesManager);
 
 app.Run();

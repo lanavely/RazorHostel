@@ -17,7 +17,6 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
         
         builder.HasOne(q => q.Image)
             .WithOne(i => i.Question)
-            .HasForeignKey<Question>(q => q.ImageId)
-            .IsRequired();
+            .HasForeignKey<Question>(q => q.ImageId);
     }
 }
