@@ -10,18 +10,19 @@ namespace Auto.Data.Configurations
         {
             builder.HasKey(x => x.BookingId);
 
-            builder.Property(x => x.Comment).HasMaxLength(1000);
-
-            builder.HasOne(b => b.User)
+            builder.HasOne(b => b.Client)
                 .WithMany(u => u.Bookings)
-                .HasPrincipalKey(k => k.Id)
-                .HasForeignKey(k => k.UserId)
+                .HasForeignKey(k => k.ClientId)
                 .IsRequired();
             
             builder.HasOne(b => b.School)
                 .WithMany(u => u.Bookings)
-                .HasPrincipalKey(k => k.IdSchool)
-                .HasForeignKey(k => k.IdSchool)
+                .HasForeignKey(k => k.SchoolId)
+                .IsRequired();
+
+            builder.HasOne(b => b.Teacher)
+                .WithMany(t => t.Bookings)
+                .HasForeignKey(b => b.TeacherId)
                 .IsRequired();
         }
     }

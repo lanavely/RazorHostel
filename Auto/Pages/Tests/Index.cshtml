@@ -1,0 +1,13 @@
+@page
+@model Auto.Pages.Tests.IndexModel
+
+@{
+    ViewData["Title"] = "Тестирование";
+}
+
+<h1>Index</h1>
+
+@foreach (var question in Model.TestModel.Questions)
+{
+    <ul>@question.Question.Text</ul>
+}

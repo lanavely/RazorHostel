@@ -17,5 +17,7 @@ namespace Auto.Data.Entities
         public string GroupNumber { get; set; }
         
         public List<Booking>? Bookings { get; set; }
+        
+        public List<IdentityUserRole<string>> UserRoles { get; set; }
     }
 }
