@@ -43,6 +43,27 @@ public class TestService
         return test;
     }
 
+    public async Task<Test> GetTestAsync(int ticketNumber)
+    {
+        var questions = await _context.Questions
+            .Where(q => q.TicketNumber == ticketNumber)
+            .OrderBy(q => q.QuestionNumber)
+            .Include(q => q.AnswerOptions)
+            .ToListAsync();
+
+        var test = new Test()
+        {
+            TicketNumber = ticketNumber,
+            Questions = questions.Select(q =>
+                new TestQuestion()
+                {
+                    Question = q
+                }).ToList()
+        };
+
+        return test;
+    }
+
     public void SelectQuestion(TestQuestion question, int idAnswer)
     {
         question.Answer = question.Question.AnswerOptions.First(o => o.AnswerId == idAnswer);

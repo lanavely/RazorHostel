@@ -23,11 +23,16 @@ public class Importer
         var questions = JsonConvert.DeserializeObject<List<QuestionImportModel>>(contents);
         
         var regex = new Regex(@"[\d-]+$");
-        foreach (var question in questions.Where(q => q.ImagePath != null))
+        foreach (var question in questions)
         {
             question.TicketNumber = int.Parse(regex.Match(question.TicketName).Groups[0].Value);
             question.QuestionNumber = int.Parse(regex.Match(question.TitleName).Groups[0].Value);
-            
+
+            if (question.ImagePath is null)
+            {
+                continue;
+            }
+
             var path = Path.GetFullPath(rootPath + question.ImagePath);
 
             await using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);

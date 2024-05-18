@@ -2,6 +2,7 @@ using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Importer;
 using Auto.Roles;
+using Auto.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -11,14 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("HostelDb") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(contextBuilder =>
+var services = builder.Services;
+services.AddDbContext<ApplicationDbContext>(contextBuilder =>
 {
     contextBuilder.UseNpgsql(connectionString);
 });
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services
+services
     .AddDefaultIdentity<AppUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
@@ -34,7 +36,8 @@ builder.Services
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRazorPages();
+services.AddRazorPages();
+services.AddScoped<TestService>();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
@@ -58,9 +61,16 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-var userManager = services.GetRequiredService<UserManager<AppUser>>();
-var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+var serviceProvider = scope.ServiceProvider;
+
+if (false)
+{
+    var importer = new Importer(serviceProvider.GetRequiredService<ApplicationDbContext>());
+    await importer.ImportAsync();
+}
+
+var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+var rolesManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
 await RoleInitializer.InitializeAsync(userManager, rolesManager);
 

@@ -23,9 +23,10 @@ public static class RoleInitializer
         }
 
         var adminEmail = "admin@gmail.com";
+        var adminName = "admin";
         if (await userManager.FindByNameAsync(adminEmail) == null)
         {
-            var admin = new AppUser { Email = adminEmail, UserName = adminEmail, PhoneNumber = "+79032432523"};
+            var admin = new AppUser { Email = adminEmail, UserName = adminEmail, PhoneNumber = "+79032432523", FirstName = adminName, LastName = adminName};
             var result = await userManager.CreateAsync(admin, "123456");
             if (result.Succeeded)
             {

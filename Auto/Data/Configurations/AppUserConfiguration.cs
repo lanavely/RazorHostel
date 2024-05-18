@@ -12,5 +12,13 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
             .WithOne()
             .HasForeignKey(ur => ur.UserId)
             .IsRequired();
+
+        builder.HasOne(u => u.Group)
+            .WithMany(g => g.Users)
+            .HasForeignKey(u => u.GroupId);
+
+        builder.HasOne(u => u.School)
+            .WithMany(s => s.Users)
+            .HasForeignKey(u => u.SchoolId);
     }
 }

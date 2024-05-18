@@ -9,5 +9,9 @@ public class TestConfiguration : IEntityTypeConfiguration<Test>
     public void Configure(EntityTypeBuilder<Test> builder)
     {
         builder.HasKey(t => t.TestId);
+
+        builder.HasOne(t => t.User)
+            .WithMany(u => u.Tests)
+            .HasForeignKey(t => t.UserId);
     }
 }

@@ -22,7 +22,8 @@ namespace Auto.Pages.Tests
         
         public async Task OnGetAsync()
         {
-            TestModel = await _service.GetTestAsync();
+            var random = Convert.ToInt32(new Random().NextInt64(25));
+            TestModel = await _service.GetTestAsync(random);
         }
     }
 }
