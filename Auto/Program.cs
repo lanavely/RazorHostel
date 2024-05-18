@@ -1,6 +1,7 @@
 using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Importer;
+using Auto.Mapping;
 using Auto.Roles;
 using Auto.Services;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,9 @@ services.AddDatabaseDeveloperPageExceptionFilter();
 services
     .AddDefaultIdentity<AppUser>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = true;
+        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
         options.Password = new PasswordOptions()
         {
             RequiredLength = 3,
@@ -38,6 +41,7 @@ services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 services.AddRazorPages();
 services.AddScoped<TestService>();
+services.AddAutoMapper(typeof(AppMappingProfile));
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
