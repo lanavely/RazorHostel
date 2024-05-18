@@ -67,6 +67,7 @@ if (false)
 {
     var importer = new Importer(serviceProvider.GetRequiredService<ApplicationDbContext>());
     await importer.ImportAsync();
+    return;
 }
 
 var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();

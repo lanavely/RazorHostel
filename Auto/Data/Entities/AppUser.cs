@@ -7,9 +7,9 @@ namespace Auto.Data.Entities
     {
         public int? SchoolId { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public string? Patronymic { get; set; }
 

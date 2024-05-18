@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Auto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240517191032_GroupForUser")]
-    partial class GroupForUser
+    [Migration("20240518053108_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,7 +84,7 @@ namespace Auto.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SchoolId")
+                    b.Property<int?>("SchoolId")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
@@ -306,15 +306,26 @@ namespace Auto.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TestId"));
 
+                    b.Property<int>("TicketNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("TestId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
                 {
-                    b.Property<string>("IdTestQuestion")
-                        .HasColumnType("text");
+                    b.Property<int>("IdTestQuestion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdTestQuestion"));
 
                     b.Property<int>("IdQuestion")
                         .HasColumnType("integer");
@@ -483,13 +494,13 @@ namespace Auto.Migrations
                         .WithMany("Users")
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("Auto.Data.Entities.School", null)
+                    b.HasOne("Auto.Data.Entities.School", "School")
                         .WithMany("Users")
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SchoolId");
 
                     b.Navigation("Group");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Booking", b =>
@@ -545,6 +556,15 @@ namespace Auto.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("Auto.Data.Entities.Tests.Test", b =>
+                {
+                    b.HasOne("Auto.Data.Entities.AppUser", "User")
+                        .WithMany("Tests")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
@@ -632,6 +652,8 @@ namespace Auto.Migrations
                     b.Navigation("ClientBookings");
 
                     b.Navigation("TeacherBookings");
+
+                    b.Navigation("Tests");
 
                     b.Navigation("UserRoles");
                 });

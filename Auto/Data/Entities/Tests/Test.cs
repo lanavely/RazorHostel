@@ -4,7 +4,7 @@ public class Test
 {
     public int TestId { get; set; }
     
-    public int? UserId { get; set; }
+    public string? UserId { get; set; }
 
     public int TicketNumber { get; set; }
     

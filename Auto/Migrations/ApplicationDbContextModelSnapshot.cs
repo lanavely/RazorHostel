@@ -45,14 +45,12 @@ namespace Auto.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("GroupId")
                         .HasColumnType("integer");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -303,15 +301,26 @@ namespace Auto.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TestId"));
 
+                    b.Property<int>("TicketNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("TestId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
                 {
-                    b.Property<string>("IdTestQuestion")
-                        .HasColumnType("text");
+                    b.Property<int>("IdTestQuestion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdTestQuestion"));
 
                     b.Property<int>("IdQuestion")
                         .HasColumnType("integer");
@@ -544,6 +553,15 @@ namespace Auto.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("Auto.Data.Entities.Tests.Test", b =>
+                {
+                    b.HasOne("Auto.Data.Entities.AppUser", "User")
+                        .WithMany("Tests")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
                 {
                     b.HasOne("Auto.Data.Entities.Tests.Question", "Question")
@@ -629,6 +647,8 @@ namespace Auto.Migrations
                     b.Navigation("ClientBookings");
 
                     b.Navigation("TeacherBookings");
+
+                    b.Navigation("Tests");
 
                     b.Navigation("UserRoles");
                 });

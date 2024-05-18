@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Auto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240517174150_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20240518053945_NullForAppUserProps")]
+    partial class NullForAppUserProps
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace Auto.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly>("Birthdate")
+                    b.Property<DateOnly?>("Birthdate")
                         .HasColumnType("date");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -48,18 +48,12 @@ namespace Auto.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("GroupId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("GroupNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -80,7 +74,6 @@ namespace Auto.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Patronymic")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
@@ -89,7 +82,7 @@ namespace Auto.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SchoolId")
+                    b.Property<int?>("SchoolId")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
@@ -311,15 +304,26 @@ namespace Auto.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TestId"));
 
+                    b.Property<int>("TicketNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("TestId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
                 {
-                    b.Property<string>("IdTestQuestion")
-                        .HasColumnType("text");
+                    b.Property<int>("IdTestQuestion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdTestQuestion"));
 
                     b.Property<int>("IdQuestion")
                         .HasColumnType("integer");
@@ -484,15 +488,17 @@ namespace Auto.Migrations
 
             modelBuilder.Entity("Auto.Data.Entities.AppUser", b =>
                 {
-                    b.HasOne("Auto.Data.Entities.Group", null)
+                    b.HasOne("Auto.Data.Entities.Group", "Group")
                         .WithMany("Users")
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("Auto.Data.Entities.School", null)
+                    b.HasOne("Auto.Data.Entities.School", "School")
                         .WithMany("Users")
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SchoolId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Booking", b =>
@@ -548,6 +554,15 @@ namespace Auto.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("Auto.Data.Entities.Tests.Test", b =>
+                {
+                    b.HasOne("Auto.Data.Entities.AppUser", "User")
+                        .WithMany("Tests")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
@@ -635,6 +650,8 @@ namespace Auto.Migrations
                     b.Navigation("ClientBookings");
 
                     b.Navigation("TeacherBookings");
+
+                    b.Navigation("Tests");
 
                     b.Navigation("UserRoles");
                 });
