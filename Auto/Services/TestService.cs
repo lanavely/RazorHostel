@@ -1,5 +1,7 @@
 ﻿using Auto.Data;
+using Auto.Data.Entities;
 using Auto.Data.Entities.Tests;
+using Auto.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auto.Services;
@@ -43,17 +45,19 @@ public class TestService
         return test;
     }
 
-    public async Task<Test> GetTestAsync(int ticketNumber)
+    public async Task<Test> GetTestAsync(int ticketNumber, AppUser user)
     {
         var questions = await _context.Questions
             .Where(q => q.TicketNumber == ticketNumber)
             .OrderBy(q => q.QuestionNumber)
             .Include(q => q.AnswerOptions)
+            .Include(q => q.Image)
             .ToListAsync();
 
         var test = new Test()
         {
             TicketNumber = ticketNumber,
+            User = user,
             Questions = questions.Select(q =>
                 new TestQuestion()
                 {

@@ -7,7 +7,20 @@
 
 <h1>Index</h1>
 
-@foreach (var question in Model.TestModel.Questions)
+@foreach (var questionNumber in Enumerable.Range(1, Model.TestModel.Questions.Count))
 {
-    <ul>@question.Question.Text</ul>
+    <form asp-page-handler="select" asp-route-number="@questionNumber">
+        <button class="btn">@questionNumber</button>
+    </form>
 }
+
+@if (Model.CurrentQuestion.Question.Image is not null)
+{
+    <div>
+        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.CurrentQuestion.Question.Image.Data))" alt="image"/>
+    </div>
+}
+<div>
+    @Model.CurrentQuestion.Question.Text
+</div>
+
