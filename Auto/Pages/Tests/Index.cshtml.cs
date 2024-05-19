@@ -13,8 +13,6 @@ namespace Auto.Pages.Tests
         private readonly UserManager<AppUser> _userManager;
         private readonly ApplicationDbContext _dbContext;
         private readonly TestService _service;
-        private int questionIndex { get; set; }
-        private int ticketNumber { get; set; }
         
         public IndexModel(
             UserManager<AppUser> userManager,
@@ -28,24 +26,29 @@ namespace Auto.Pages.Tests
         
         [BindProperty]
         public Test TestModel { get; set; }
+        
+        public int QuestionIndex { get; set; }
 
-        public TestQuestion CurrentQuestion => TestModel.Questions[questionIndex];
+        public int TicketNumber { get; set; }
+
+        public TestQuestion CurrentQuestion => TestModel.Questions[QuestionIndex];
         
         public async Task OnGetAsync(int ticket)
         {
+            TicketNumber = ticket;
             AppUser user = null;
             if (User.Identity.IsAuthenticated)
             {
                 user = await _userManager.GetUserAsync(User);
             }
-            TestModel = await _service.GetTestAsync(ticket, user);
+            TestModel = await _service.GetTestAsync(TicketNumber, user);
         }
 
-        public async Task OnPostSelectAsync(int number)
+        public async Task OnPostSelectAsync(int number, int ticket)
         {
-            questionIndex = number;
+            QuestionIndex = number;
 
-            OnGetAsync(ticket);
+            OnGetAsync(TicketNumber);
         }
     }
 }

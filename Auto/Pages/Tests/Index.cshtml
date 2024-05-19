@@ -9,7 +9,7 @@
 
 @foreach (var questionNumber in Enumerable.Range(1, Model.TestModel.Questions.Count))
 {
-    <form asp-page-handler="select" asp-route-number="@questionNumber">
+    <form asp-page-handler="select" asp-route-number="@questionNumber" asp-route-ticket="@">
         <button class="btn">@questionNumber</button>
     </form>
 }
