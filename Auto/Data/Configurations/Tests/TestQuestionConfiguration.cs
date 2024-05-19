@@ -17,7 +17,7 @@ public class TestQuestionConfiguration : IEntityTypeConfiguration<TestQuestion>
 
         builder.HasOne(t => t.Answer)
             .WithMany()
-            .HasForeignKey(tq => tq.IdSelectedAnswer);
+            .HasForeignKey(tq => tq.AnswerId);
 
         builder.HasOne(t => t.Test)
             .WithMany(t => t.Questions)

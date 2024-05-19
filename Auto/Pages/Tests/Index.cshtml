@@ -1,26 +1,23 @@
 @page
-@model Auto.Pages.Tests.IndexModel
+@using Auto.Helpers
+@model IndexModel
 
 @{
-    ViewData["Title"] = "Тестирование";
+    ViewData["Title"] = "Тестирование ГИБДД";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-@foreach (var questionNumber in Enumerable.Range(1, Model.TestModel.Questions.Count))
-{
-    <form asp-page-handler="select" asp-route-number="@questionNumber" asp-route-ticket="@">
-        <button class="btn">@questionNumber</button>
-    </form>
-}
+<h2>Выберите номер билета</h2>
 
-@if (Model.CurrentQuestion.Question.Image is not null)
-{
-    <div>
-        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.CurrentQuestion.Question.Image.Data))" alt="image"/>
-    </div>
-}
-<div>
-    @Model.CurrentQuestion.Question.Text
+<div class="list-group list-group-horizontal">
+    @foreach (var ticket in Model.Tickets)
+    {
+        <a class="@BackgroundHelper.GetColor(ticket.Status) list-group-item list-group-item-action"
+           asp-page="./Executing"
+           asp-route-ticket="@ticket.TicketNumber"
+           asp-route-testId="@ticket.Test?.TestId">
+            @ticket.TicketNumber
+        </a>
+    }
 </div>
-

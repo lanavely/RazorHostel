@@ -3,6 +3,7 @@ using System;
 using Auto.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Auto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519103144_QuestionNumberForTest")]
+    partial class QuestionNumberForTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,10 +331,10 @@ namespace Auto.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdTestQuestion"));
 
-                    b.Property<int?>("AnswerId")
+                    b.Property<int>("IdQuestion")
                         .HasColumnType("integer");
 
-                    b.Property<int>("IdQuestion")
+                    b.Property<int?>("IdSelectedAnswer")
                         .HasColumnType("integer");
 
                     b.Property<int>("IdTest")
@@ -339,9 +342,9 @@ namespace Auto.Migrations
 
                     b.HasKey("IdTestQuestion");
 
-                    b.HasIndex("AnswerId");
-
                     b.HasIndex("IdQuestion");
+
+                    b.HasIndex("IdSelectedAnswer");
 
                     b.HasIndex("IdTest");
 
@@ -570,15 +573,15 @@ namespace Auto.Migrations
 
             modelBuilder.Entity("Auto.Data.Entities.Tests.TestQuestion", b =>
                 {
-                    b.HasOne("Auto.Data.Entities.Tests.AnswerOption", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerId");
-
                     b.HasOne("Auto.Data.Entities.Tests.Question", "Question")
                         .WithMany()
                         .HasForeignKey("IdQuestion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Auto.Data.Entities.Tests.AnswerOption", "Answer")
+                        .WithMany()
+                        .HasForeignKey("IdSelectedAnswer");
 
                     b.HasOne("Auto.Data.Entities.Tests.Test", "Test")
                         .WithMany("Questions")

@@ -1,0 +1,99 @@
+@page
+@using Auto.Helpers
+@model ExecutingModel
+
+@{
+    ViewData["Title"] = $"Билет №{Model.TestModel.Test.TicketNumber}";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="list-group list-group-horizontal">
+    @foreach (var questionNumber in Enumerable.Range(1, Model.TestModel.Test.Questions.Count))
+    {
+            <a class="@(questionNumber == Model.TestModel.Test.CurrentQuestionNumber + 1 ? "border-3 border-primary" : string.Empty) list-group-item list-group-item-action @(BackgroundHelper.GetColor(Model.TestModel.Test.Questions[questionNumber - 1]))"
+           asp-page="./Executing"
+           asp-route-testId="@Model.TestModel.Test.TestId"
+           asp-route-questionNumber="@(questionNumber - 1)">
+            @questionNumber
+        </a>
+    }
+</div>
+
+<div class="text-right">
+    Вопрос @(Model.TestModel.Test.CurrentQuestionNumber + 1) из @Model.TestModel.Test.Questions.Count
+
+</div>
+
+<div>
+    @if (Model.TestModel.CurrentQuestion.Question.Image is not null)
+    {
+        <div>
+            <img class="w-75" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.TestModel.CurrentQuestion.Question.Image.Data))" alt="image"/>
+        </div>
+    }
+    <div class="w-75">
+        @Model.TestModel.CurrentQuestion.Question.Text
+    </div>
+</div>
+
+<br/>
+
+<form method="post">
+    <div style="display:none">
+        @Html.HiddenFor(model => model.TestModel.TestId)
+    </div>
+
+    <div class="list-group">
+        @foreach (var item in Model.TestModel.CurrentQuestion.Question.AnswerOptions)
+        {
+            <button
+                class="list-group-item w-75 list-group-item-action text-wrap @(BackgroundHelper.GetColor(Model.TestModel.CurrentQuestion, item))"
+                type="submit"
+                asp-page-handler="select"
+                asp-route-answerId="@item.AnswerId"
+                disabled="@(Model.TestModel.CurrentQuestion.AnswerId is not null)"
+                style="border-color: #F5F5F5">
+                @(Model.TestModel.CurrentQuestion.Question.AnswerOptions.IndexOf(item) + 1). @item.Text
+            </button>
+        }
+    </div>
+    <br/>
+</form>
+
+
+
+@if (Model.TestModel.Test.CurrentQuestionNumber + 1 < Model.TestModel.Test.Questions.Count && Model.TestModel.CurrentQuestion.AnswerId is not null)
+{
+    <a class="btn btn-primary btn-lg"
+       asp-page="./Executing"
+       asp-route-testId="@Model.TestModel.Test.TestId"
+       asp-route-questionNumber="@(Model.TestModel.Test.CurrentQuestionNumber + 1)">
+        Следующий вопрос
+    </a>
+}
+
+@if (Model.TestModel.ShowCloseTest == true)
+{
+    if (Model.TestModel.Test.Questions.All(q => q.Answer?.IsCorrect == true))
+    {
+        <h2>Тест пройден успешно</h2>
+    }
+    else
+    {
+        <h2>Тест провален</h2>
+        <div>
+            Количество ошибок: @Model.TestModel.Test.Questions.Count(q => q.Answer?.IsCorrect == false)
+        </div>
+    }
+    <br/>
+
+    <form asp-page-handler="restart" method="post">
+        <div style="display:none">
+            @Html.HiddenFor(model => model.TestModel.TestId)
+        </div>
+        <button type="submit" class="btn btn-danger btn-lg">
+            Начать заного
+        </button>
+    </form>
+}

@@ -1,13 +1,15 @@
 using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Data.Entities.Tests;
+using Auto.Enums;
 using Auto.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Auto.Pages.Tests
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
@@ -24,31 +26,46 @@ namespace Auto.Pages.Tests
             _service = service;
         }
         
-        [BindProperty]
-        public Test TestModel { get; set; }
+        public List<Ticket> Tickets { get; set; }
         
-        public int QuestionIndex { get; set; }
-
-        public int TicketNumber { get; set; }
-
-        public TestQuestion CurrentQuestion => TestModel.Questions[QuestionIndex];
-        
-        public async Task OnGetAsync(int ticket)
+        public async Task OnGetAsync()
         {
-            TicketNumber = ticket;
             AppUser user = null;
             if (User.Identity.IsAuthenticated)
             {
                 user = await _userManager.GetUserAsync(User);
             }
-            TestModel = await _service.GetTestAsync(TicketNumber, user);
+
+            var tests = await _service.GetTestForTicketsAsync(user);
+            var tickets = Enumerable.Range(1, 40).Select(i => new Ticket()
+            {
+                TicketNumber = i,
+                Test = tests.FirstOrDefault(t => t.TicketNumber == i)
+            }).ToList();
+
+            Tickets = tickets;
         }
-
-        public async Task OnPostSelectAsync(int number, int ticket)
+        
+        public class Ticket
         {
-            QuestionIndex = number;
+            public int TicketNumber { get; set; }
+            public Test? Test { get; set; }
+            public Status Status
+            {
+                get
+                {
+                    if (Test == null)
+                        return Status.Unknown;
+                    if (Test.Questions.Any(q => q.Answer is null))
+                        return Status.InProcess;
+                    if (Test.Questions.All(q => q.Answer?.IsCorrect == true))
+                    {
+                        return Status.Success;
+                    }
 
-            OnGetAsync(TicketNumber);
+                    return Status.Fail;
+                }
+            }
         }
     }
 }

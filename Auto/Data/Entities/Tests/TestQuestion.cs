@@ -1,4 +1,6 @@
-﻿namespace Auto.Data.Entities.Tests;
+﻿using Auto.Enums;
+
+namespace Auto.Data.Entities.Tests;
 
 public class TestQuestion
 {
@@ -8,7 +10,7 @@ public class TestQuestion
     
     public int IdQuestion { get; set; }
 
-    public int? IdSelectedAnswer { get; set; }
+    public int? AnswerId { get; set; }
 
     public Test Test { get; set; }
     
