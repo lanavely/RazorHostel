@@ -65,7 +65,6 @@ namespace Auto.Pages.Tests
             }
 
             TestModel.CurrentQuestion.AnswerId = answerId;
-            TestModel.Test.CurrentQuestionNumber = (TestModel.Test.CurrentQuestionNumber + 1) % TestModel.Test.Questions.Count;
             _dbContext.Tests.Update(TestModel.Test);
             await _dbContext.SaveChangesAsync();
             

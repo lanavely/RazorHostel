@@ -63,12 +63,12 @@
 
 
 
-@if (Model.TestModel.Test.CurrentQuestionNumber + 1 < Model.TestModel.Test.Questions.Count && Model.TestModel.CurrentQuestion.AnswerId is not null)
+@if (Model.TestModel.Test.Questions.Any(q => q.AnswerId is null) && Model.TestModel.CurrentQuestion.AnswerId is not null)
 {
     <a class="btn btn-primary btn-lg"
        asp-page="./Executing"
        asp-route-testId="@Model.TestModel.Test.TestId"
-       asp-route-questionNumber="@(Model.TestModel.Test.CurrentQuestionNumber + 1)">
+       asp-route-questionNumber="@(Model.TestModel.Test.CurrentQuestionNumber + 1 < Model.TestModel.Test.Questions.Count ? Model.TestModel.Test.CurrentQuestionNumber + 1 : Model.TestModel.Test.Questions.IndexOf(Model.TestModel.Test.Questions.First(q => q.AnswerId is null)))">
         Следующий вопрос
     </a>
 }
