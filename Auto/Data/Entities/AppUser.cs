@@ -22,8 +22,10 @@ namespace Auto.Data.Entities
 
         public int? GroupId { get; set; }
         
+        [DisplayName("Группа")]
         public Group? Group { get; set; }
         
+        [DisplayName("Автошкола")]
         public School? School { get; set; }
         
         public List<Booking>? ClientBookings { get; set; }

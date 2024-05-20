@@ -24,12 +24,13 @@ namespace Auto.Data.Entities
         [DisplayName("Время окончания")]
         public DateTime EndDate { get; set; }
 
-        [DisplayName("Студент")]
+        [DisplayName("Ученик")]
         public AppUser? Client { get; set; }
         
         [DisplayName("Инструктор")]
         public AppUser? Teacher { get; set; }
         
+        [DisplayName("Автошкола")]
         public School? School { get; set; }
     }
 }

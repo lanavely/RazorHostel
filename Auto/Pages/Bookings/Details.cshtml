@@ -9,14 +9,26 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Booking</h4>
+    <h4>Бронирование №@Model.Booking.BookingId</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.isClosed)
+            @Html.DisplayNameFor(model => model.Booking.Client)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.isClosed)
+            @Html.DisplayFor(model => model.Booking.Client.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Booking.Teacher)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Booking.Teacher.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Booking.School)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Booking.School.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Booking.Comment)
@@ -37,26 +49,14 @@
             @Html.DisplayFor(model => model.Booking.EndDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.Client)
+            @Html.DisplayNameFor(model => model.Booking.isClosed)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.Client.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.Teacher)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.Teacher.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.School)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.School.SchoolId)
+            @Html.DisplayFor(model => model.Booking.isClosed)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Booking?.BookingId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Booking?.BookingId">Редактировать</a> |
+    <a asp-page="./Index">Обратно к списку</a>
 </div>

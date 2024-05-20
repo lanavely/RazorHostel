@@ -2,29 +2,33 @@
 @model Auto.Pages.Bookings.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Создание";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Booking</h4>
+<h4>Бронирование №@Model.Booking.BookingId</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Booking.BookingId" />
             <div class="form-group">
                 <label asp-for="Booking.ClientId" class="control-label"></label>
-                <select asp-for="Booking.ClientId" class ="form-control" asp-items="ViewBag.ClientId"></select>
+                <select asp-for="Booking.ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                <span asp-validation-for="Booking.ClientId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Booking.TeacherId" class="control-label"></label>
-                <select asp-for="Booking.TeacherId" class ="form-control" asp-items="ViewBag.TeacherId"></select>
+                <select asp-for="Booking.TeacherId" class="form-control" asp-items="ViewBag.TeacherId"></select>
+                <span asp-validation-for="Booking.TeacherId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Booking.SchoolId" class="control-label"></label>
-                <select asp-for="Booking.SchoolId" class ="form-control" asp-items="ViewBag.SchoolId"></select>
+                <select asp-for="Booking.SchoolId" class="form-control" asp-items="ViewBag.SchoolId"></select>
+                <span asp-validation-for="Booking.SchoolId" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -47,13 +51,15 @@
                 <span asp-validation-for="Booking.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="./Index">Обратно к списку</a>
 </div>
+
+
 

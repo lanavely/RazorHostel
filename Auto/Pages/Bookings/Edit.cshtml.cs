@@ -32,14 +32,12 @@ namespace Auto.Pages.Bookings
                 return NotFound();
             }
             Booking = booking;
-           ViewData["ClientId"] = new SelectList(_context.Users, "Id", "Id");
-           ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "SchoolId");
-           ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["ClientId"] = new SelectList(_context.Users, "Id", "FullName");
+            ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "Name");
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FullName");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -70,7 +68,7 @@ namespace Auto.Pages.Bookings
 
         private bool BookingExists(int id)
         {
-          return (_context.Bookings?.Any(e => e.BookingId == id)).GetValueOrDefault();
+            return (_context.Bookings?.Any(e => e.BookingId == id)).GetValueOrDefault();
         }
     }
 }

@@ -17,20 +17,19 @@ namespace Auto.Pages.Bookings
 
         public IActionResult OnGet()
         {
-        ViewData["ClientId"] = new SelectList(_context.Users, "Id", "Id");
-        ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "SchoolId");
-        ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["ClientId"] = new SelectList(_context.Users, "Id", "FullName");
+            ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "Name");
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FullName");
+
             return Page();
         }
 
         [BindProperty]
         public Booking Booking { get; set; } = default!;
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
+            if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
             {
                 return Page();
             }

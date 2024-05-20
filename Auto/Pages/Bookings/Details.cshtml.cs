@@ -24,7 +24,11 @@ namespace Auto.Pages.Bookings
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FirstOrDefaultAsync(m => m.BookingId == id);
+            var booking = await _context.Bookings
+                .Include(b => b.Client)
+                .Include(b => b.Teacher)
+                .Include(b => b.School)
+                .FirstOrDefaultAsync(m => m.BookingId == id);
             if (booking == null)
             {
                 return NotFound();
