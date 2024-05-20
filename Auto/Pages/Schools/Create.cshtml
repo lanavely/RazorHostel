@@ -2,13 +2,13 @@
 @model Auto.Pages.Schools.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Создание";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>School</h4>
+<h4>Автошкола</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -47,6 +47,6 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Обратно к списку</a>
 </div>
 

@@ -2,14 +2,14 @@
 @model Auto.Pages.Schools.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Автошколы";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Создать</a>
 </p>
 <table class="table">
     <thead>
@@ -51,9 +51,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.SchoolId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.SchoolId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.SchoolId">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.SchoolId">Редактировать</a> |
+                <a asp-page="./Details" asp-route-id="@item.SchoolId">Подробнее</a> |
+                <a asp-page="./Delete" asp-route-id="@item.SchoolId">Удалить</a>
             </td>
         </tr>
 }
