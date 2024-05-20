@@ -71,9 +71,21 @@ namespace Auto.Pages.Tests
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRestartAsync(int testId)
+        public async Task<IActionResult> OnPostRestartAsync(int? testId)
         {
-            TestModel.Test = await _service.GetTestByIdAsync(testId);
+            if (testId == null)
+            {
+                return Page();
+            }
+            TestModel.Test = await _service.GetTestByIdAsync(testId.Value);
+            TestModel.Test.Questions.ForEach(q =>
+            {
+                q.AnswerId = null;
+                q.Answer = null;
+            });
+
+            _dbContext.Tests.Update(TestModel.Test);
+            await _dbContext.SaveChangesAsync();
             return Page();
         }
 

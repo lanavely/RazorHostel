@@ -77,18 +77,18 @@
 {
     if (Model.TestModel.Test.Questions.All(q => q.Answer?.IsCorrect == true))
     {
-        <h2>Тест пройден успешно</h2>
+        <h1>Тест пройден успешно</h1>
     }
     else
     {
-        <h2>Тест провален</h2>
+        <h1>Тест провален</h1>
         <div>
             Количество ошибок: @Model.TestModel.Test.Questions.Count(q => q.Answer?.IsCorrect == false)
         </div>
     }
     <br/>
 
-    <form asp-page-handler="restart" method="post">
+    <form asp-page-handler="restart" method="post" asp-route-testId="@Model.TestModel.Test.TestId">
         <div style="display:none">
             @Html.HiddenFor(model => model.TestModel.TestId)
         </div>
