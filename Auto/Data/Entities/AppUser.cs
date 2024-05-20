@@ -1,4 +1,5 @@
-﻿using Auto.Data.Entities.Tests;
+﻿using System.ComponentModel;
+using Auto.Data.Entities.Tests;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auto.Data.Entities
@@ -7,12 +8,16 @@ namespace Auto.Data.Entities
     {
         public int? SchoolId { get; set; }
 
+        [DisplayName("Фамилия")]
         public string? FirstName { get; set; }
         
+        [DisplayName("Имя")]
         public string? LastName { get; set; }
 
+        [DisplayName("Отчество")]
         public string? Patronymic { get; set; }
 
+        [DisplayName("Дата рождения")]
         public DateOnly? Birthdate { get; set; }
 
         public int? GroupId { get; set; }
@@ -28,5 +33,8 @@ namespace Auto.Data.Entities
         public List<IdentityUserRole<string>> UserRoles { get; set; }
         
         public List<Test> Tests { get; set; }
+
+        [DisplayName("ФИО")]
+        public string FullName => $"{LastName} {FirstName} {Patronymic}";
     }
 }

@@ -1,6 +1,4 @@
-﻿using Auto.Enums;
-
-namespace Auto.Data.Entities.Tests;
+﻿namespace Auto.Data.Entities.Tests;
 
 public class AnswerOption
 {

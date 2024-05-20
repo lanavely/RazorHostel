@@ -1,7 +1,6 @@
 ﻿using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Data.Entities.Tests;
-using Auto.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auto.Services;

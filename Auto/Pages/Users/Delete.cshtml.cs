@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
-using Auto.Data.Entities;
+﻿using Auto.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Auto.Pages.Users
 {

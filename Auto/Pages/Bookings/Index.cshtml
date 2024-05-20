@@ -1,0 +1,73 @@
+@page
+@model Auto.Pages.Bookings.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Создать</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].isClosed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].Teacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].School)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Booking) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.isClosed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School.Name)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.BookingId">Редактировать</a> |
+                <a asp-page="./Details" asp-route-id="@item.BookingId">Посмотреть</a> |
+                <a asp-page="./Delete" asp-route-id="@item.BookingId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
