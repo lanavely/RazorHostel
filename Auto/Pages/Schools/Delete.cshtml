@@ -44,10 +44,11 @@
             @Html.DisplayFor(model => model.School.Email)
         </dd>
     </dl>
+    <br/>
     
     <form method="post">
         <input type="hidden" asp-for="School.SchoolId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>
 </div>

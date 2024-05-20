@@ -13,6 +13,7 @@ namespace Auto.Data.Entities
         [DisplayName("Описание")]
         public string Description { get; set; }
 
+        [DisplayName("Адрес")]
         public string Address { get; set; }
 
         [Phone]
@@ -20,7 +21,7 @@ namespace Auto.Data.Entities
         public string PhoneNumber { get; set; }
 
         [EmailAddress]
-        [DisplayName("Email")]
+        [DisplayName("Электронная почта")]
         public string Email { get; set; }
 
         public List<AppUser>? Users { get; set; }
