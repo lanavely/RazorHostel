@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Auto.Data.Entities.Bookings;
 
 namespace Auto.Data.Entities
 {
@@ -24,6 +25,8 @@ namespace Auto.Data.Entities
         [DisplayName("Электронная почта")]
         public string Email { get; set; }
 
+        public Schedule? Schedule { get; set; }
+        
         public List<AppUser>? Users { get; set; }
         
         public List<Booking>? Bookings { get; set; }

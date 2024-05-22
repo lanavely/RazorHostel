@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Auto.Data.Entities.Bookings;
 using Auto.Data.Entities.Tests;
 using Microsoft.AspNetCore.Identity;
 

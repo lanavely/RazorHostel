@@ -1,4 +1,5 @@
 ﻿using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +24,11 @@ namespace Auto.Data.Configurations
             builder.HasOne(b => b.Teacher)
                 .WithMany(t => t.TeacherBookings)
                 .HasForeignKey(b => b.TeacherId)
+                .IsRequired();
+
+            builder.HasOne(b => b.ScheduleItem)
+                .WithMany()
+                .HasForeignKey(b => b.ScheduleItemId)
                 .IsRequired();
         }
     }

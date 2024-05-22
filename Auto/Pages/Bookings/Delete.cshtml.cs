@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
 
 namespace Auto.Pages.Bookings
 {
@@ -25,7 +26,9 @@ namespace Auto.Pages.Bookings
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FirstOrDefaultAsync(m => m.BookingId == id);
+            var booking = await _context.Bookings
+                .Include(b => b.ScheduleItem)
+                .FirstOrDefaultAsync(m => m.BookingId == id);
 
             if (booking == null)
             {

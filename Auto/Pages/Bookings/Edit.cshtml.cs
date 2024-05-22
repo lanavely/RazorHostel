@@ -4,16 +4,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Auto.Pages.Bookings
 {
+    [Authorize(Roles = $"{Consts.Admin},{Consts.Instructor}")]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -31,10 +37,17 @@ namespace Auto.Pages.Bookings
             {
                 return NotFound();
             }
-            Booking = booking;
+            
+            var user = await _userManager.GetUserAsync(User);
+            var schedule = await _context.Schedules
+                .Include(s => s.ScheduleItems)
+                .FirstAsync(s => s.SchoolId == user.SchoolId);
+
             ViewData["ClientId"] = new SelectList(_context.Users, "Id", "FullName");
-            ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "Name");
+            ViewData["SchoolId"] = new SelectList(_context.Schools.Where(s => s.SchoolId == user.SchoolId), "SchoolId", "Name");
             ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FullName");
+            ViewData["ScheduleItemId"] = new SelectList(schedule.ScheduleItems, "Id", "TimeString");
+
             return Page();
         }
 

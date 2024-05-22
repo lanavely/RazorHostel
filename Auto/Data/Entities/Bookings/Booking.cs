@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Auto.Data.Entities
+namespace Auto.Data.Entities.Bookings
 {
     public class Booking
     {
@@ -10,6 +10,8 @@ namespace Auto.Data.Entities
 
         public string TeacherId { get; set; }
         
+        public int ScheduleItemId { get; set; }
+        
         public int SchoolId { get; set; }
         
         [DisplayName("Закрыто")]
@@ -18,11 +20,11 @@ namespace Auto.Data.Entities
         [DisplayName("Комментарий")]
         public string? Comment { get; set; }
 
-        [DisplayName("Время начала")]
-        public DateTime StartDate { get; set; }
-
-        [DisplayName("Время окончания")]
-        public DateTime EndDate { get; set; }
+        [DisplayName("Дата")]
+        public DateOnly Date { get; set; }
+        
+        [DisplayName("Расписание")]
+        public ScheduleItem? ScheduleItem { get; set; }
 
         [DisplayName("Ученик")]
         public AppUser? Client { get; set; }

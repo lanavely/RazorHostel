@@ -1,6 +1,7 @@
 ﻿using Auto.Data.Configurations;
 using Auto.Data.Configurations.Tests;
 using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
 using Auto.Data.Entities.Tests;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,10 @@ namespace Auto.Data
         public DbSet<Test> Tests { get; set; }
         
         public DbSet<TestQuestion> TestQuestions { get; set; }
+        
+        public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<ScheduleItem> ScheduleItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

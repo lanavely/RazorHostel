@@ -1,5 +1,5 @@
 @page
-@model Auto.Pages.Bookings.IndexModel
+@model Auto.Pages.UserBookings.IndexModel
 
 @{
     ViewData["Title"] = "Бронирования";
@@ -21,10 +21,10 @@
                 @Html.DisplayNameFor(model => model.Booking[0].Comment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Booking[0].StartDate)
+                @Html.DisplayNameFor(model => model.Booking[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Booking[0].EndDate)
+                @Html.DisplayNameFor(model => model.Booking[0].ScheduleItem)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Booking[0].Client)
@@ -48,10 +48,10 @@
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
+                @Html.DisplayFor(modelItem => item.ScheduleItem.TimeString)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Client.FullName)

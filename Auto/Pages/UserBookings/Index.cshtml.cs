@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
 
-namespace Auto.Pages.Bookings
+namespace Auto.Pages.UserBookings
 {
     public class IndexModel : PageModel
     {

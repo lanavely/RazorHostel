@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Data.Entities.Bookings;
 
 namespace Auto.Pages.Bookings
 {
@@ -28,6 +29,7 @@ namespace Auto.Pages.Bookings
                 .Include(b => b.Client)
                 .Include(b => b.Teacher)
                 .Include(b => b.School)
+                .Include(b => b.ScheduleItem)
                 .FirstOrDefaultAsync(m => m.BookingId == id);
             if (booking == null)
             {
