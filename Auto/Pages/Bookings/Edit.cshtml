@@ -30,11 +30,6 @@
                 <select asp-for="Booking.SchoolId" class="form-control" asp-items="ViewBag.SchoolId"></select>
                 <span asp-validation-for="Booking.SchoolId" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Booking.isClosed" /> @Html.DisplayNameFor(model => model.Booking.isClosed)
-                </label>
-            </div>
             <div class="form-group">
                 <label asp-for="Booking.Comment" class="control-label"></label>
                 <input asp-for="Booking.Comment" class="form-control" />

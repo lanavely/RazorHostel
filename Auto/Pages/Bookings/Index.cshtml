@@ -15,12 +15,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].isClosed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].Comment)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Bookings[0].Date)
             </th>
             <th>
@@ -35,18 +29,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Bookings[0].School)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bookings[0].Comment)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Bookings) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.isClosed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
@@ -61,6 +52,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.School.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.BookingId">Редактировать</a> |

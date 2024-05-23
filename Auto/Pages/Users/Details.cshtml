@@ -115,9 +115,6 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserModel.Bookings[0].isClosed)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.UserModel.Bookings[0].Comment)
         </th>
         <th>
@@ -135,9 +132,6 @@
     <tbody>
     @foreach (var item in Model.UserModel.Bookings) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.isClosed)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>

@@ -14,9 +14,6 @@ namespace Auto.Data.Entities.Bookings
         
         public int SchoolId { get; set; }
         
-        [DisplayName("Закрыто")]
-        public bool isClosed { get; set; }
-        
         [DisplayName("Комментарий")]
         public string? Comment { get; set; }
 
