@@ -20,11 +20,6 @@ namespace Auto.Data.Entities
 
         [DisplayName("Дата рождения")]
         public DateOnly? Birthdate { get; set; }
-
-        public int? GroupId { get; set; }
-        
-        [DisplayName("Группа")]
-        public Group? Group { get; set; }
         
         [DisplayName("Автошкола")]
         public School? School { get; set; }

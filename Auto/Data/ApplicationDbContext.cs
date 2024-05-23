@@ -17,8 +17,6 @@ namespace Auto.Data
 
         public DbSet<Booking> Bookings { get; set; }
         
-        public DbSet<Group> Groups { get; set; }
-        
         public DbSet<School> Schools { get; set; }
         
         public DbSet<AnswerOption> AnswerOptions { get; set; }
@@ -41,7 +39,6 @@ namespace Auto.Data
         {
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new BookingConfiguration());
-            modelBuilder.ApplyConfiguration(new GroupConfiguration());
             modelBuilder.ApplyConfiguration(new SchoolConfiguration());
             
             modelBuilder.ApplyConfiguration(new AnswerOptionConfiguration());
