@@ -48,7 +48,7 @@ public class RegisterModel : PageModel
         {
             await _userManager.AddToRoleAsync(user, Consts.Student);
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToPage("/");
+            return RedirectToPage("/Index");
         }
         foreach (var error in result.Errors)
         {

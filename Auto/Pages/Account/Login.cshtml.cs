@@ -36,7 +36,7 @@ public class LoginModel : PageModel
             Input.Password, Input.RememberMe, lockoutOnFailure: true);
         if (result.Succeeded)
         {
-            return LocalRedirect("~/");
+            return RedirectToPage("/Index");
         }
 
         ModelState.AddModelError(string.Empty, "Неверный никнейм или пароль");

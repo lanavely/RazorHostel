@@ -52,7 +52,7 @@ public class ManageModel : PageModel
         Input = _mapper.Map<AdminUserEditModel>(user);
         
         ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "Name");
-        ViewData["Role"] = new SelectList(_roleManager.Roles, "Name", "Name");
+        ViewData["RoleName"] = new SelectList(_roleManager.Roles, "Name", "Name");
 
         return Page();
     }
@@ -64,10 +64,10 @@ public class ManageModel : PageModel
             return Page();
         }
         
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _userManager.FindByIdAsync(Input.Id);
         if (user == null)
         {
-            return NotFound($"Не найден пользователь с ID '{_userManager.GetUserId(User)}'.");
+            return NotFound("Не найден пользователь");
         }
 
         if (Input.Password is not null)
@@ -97,10 +97,10 @@ public class ManageModel : PageModel
             }
         }
 
-        if (Input.Role is not null)
+        if (Input.RoleName is not null)
         {
             await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
-            await _userManager.AddToRoleAsync(user, Input.Role);
+            await _userManager.AddToRoleAsync(user, Input.RoleName);
             await _userManager.UpdateAsync(user);
         }
 

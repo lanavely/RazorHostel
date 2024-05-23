@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Auto.Pages.Schools
 {
+    [Authorize(Roles=Consts.AdminInstructor)]
     public class IndexModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;

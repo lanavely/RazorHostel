@@ -10,7 +10,7 @@
 
 <h2>Выберите номер билета</h2>
 
-<div class="list-group list-group-horizontal">
+<div class="list-group list-group-horizontal d-inline-flex flex-wrap w-75">
     @foreach (var ticket in Model.Tickets)
     {
         <a class="@BackgroundHelper.GetColor(ticket.Status) list-group-item list-group-item-action"

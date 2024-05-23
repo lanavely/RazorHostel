@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Auto.Pages.Account.Manage;
+namespace Auto.Pages.Account;
 
-public class IndexModel : PageModel
+public class ManageModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly IMapper _mapper;
 
-    public IndexModel(
+    public ManageModel(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
         IMapper mapper)
@@ -84,6 +84,6 @@ public class IndexModel : PageModel
 
         await _signInManager.RefreshSignInAsync(user);
         StatusMessage = "Пользователь обновлен";
-        return RedirectToPage();
+        return Page();
     }
 }

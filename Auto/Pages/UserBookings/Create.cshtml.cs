@@ -30,13 +30,24 @@ public class Create : PageModel
     public async Task OnGetAsync()
     {
         var user = await _userManager.GetUserAsync(User);
+
+        var students = new List<AppUser>();
+
+        if (await _userManager.IsInRoleAsync(user, Consts.Student))
+        {
+           students.Add(user); 
+        }
+        else
+        {
+            students.AddRange((await _userManager.GetUsersInRoleAsync(Consts.Instructor))
+                .Where(u => u.SchoolId == user.SchoolId));
+        }
         
         var teachers = (await _userManager.GetUsersInRoleAsync(Consts.Instructor))
             .Where(u => u.SchoolId == user.SchoolId).ToList();
 
-        var schedule = await _context.Schedules.FirstAsync(s => s.SchoolId == user.SchoolId);
-        
         ViewData["TeacherId"] = new SelectList(teachers, "Id", "FullName");
+        ViewData["StudentId"] = new SelectList(students, "Id", "FullName");
     }
 
     public async Task<IActionResult> OnPostSelectTimeAsync()
@@ -101,5 +112,8 @@ public class Create : PageModel
         
         [DisplayName("Инструктор")]
         public string TeacherId { get; set; }
+        
+        [DisplayName("Студент")]
+        public string StudentId { get; set; }
     }
 }

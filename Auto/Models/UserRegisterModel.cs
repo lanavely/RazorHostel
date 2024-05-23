@@ -5,7 +5,7 @@ namespace Auto.Models;
 public class UserRegisterModel : UserModel
 {
     [Required]
-    [StringLength(100, ErrorMessage = "{0} должен содержать от {2} до {1} символов", MinimumLength = 6)]
+    [StringLength(100, ErrorMessage = "{0} должен содержать от {2} до {1} символов", MinimumLength = 3)]
     [DataType(DataType.Password)]
     [Display(Name = "Пароль")]
     public string Password { get; set; }
