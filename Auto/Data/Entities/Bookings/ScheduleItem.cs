@@ -12,7 +12,7 @@ public class ScheduleItem
     public TimeOnly StartTime { get; set; }
 
     [DisplayName("Время окончания")]
-    public DateTime EndTime { get; set; }
+    public TimeOnly EndTime { get; set; }
 
     [DisplayName("Расписание")]
     public string TimeString => $"{StartTime} - {EndTime}";
