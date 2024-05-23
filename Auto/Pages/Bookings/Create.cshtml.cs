@@ -1,56 +1,119 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel;
 using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Data.Entities.Bookings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auto.Pages.Bookings
+namespace Auto.Pages.UserBookings;
+
+[Authorize]
+public class Create : PageModel
 {
-    [Authorize(Roles = $"{Consts.Admin},{Consts.Instructor}")]
-    public class CreateModel : PageModel
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
+
+    public Create(
+        ApplicationDbContext context,
+        UserManager<AppUser> userManager)
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<AppUser> _userManager;
+        _context = context;
+        _userManager = userManager;
+    }
 
-        public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager)
+    [BindProperty] public UserBookingCreateModel Model { get; set; } = new();
+    
+    public async Task OnGetAsync()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        var students = new List<AppUser>();
+
+        if (await _userManager.IsInRoleAsync(user, Consts.Student))
         {
-            _context = context;
-            _userManager = userManager;
+           students.Add(user); 
         }
-
-        public async Task<IActionResult> OnGetAsync()
+        else
         {
-            var user = await _userManager.GetUserAsync(User);
-            var schedule = await _context.Schedules
-                .Include(s => s.ScheduleItems)
-                .FirstAsync(s => s.SchoolId == user.SchoolId);
+            students.AddRange((await _userManager.GetUsersInRoleAsync(Consts.Instructor))
+                .Where(u => u.SchoolId == user.SchoolId));
+        }
+        
+        var teachers = (await _userManager.GetUsersInRoleAsync(Consts.Instructor))
+            .Where(u => u.SchoolId == user.SchoolId).ToList();
 
-            ViewData["ClientId"] = new SelectList(_context.Users, "Id", "FullName");
-            ViewData["SchoolId"] = new SelectList(_context.Schools.Where(s => user.SchoolId == null || s.SchoolId == user.SchoolId), "SchoolId", "Name");
-            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FullName");
-            ViewData["ScheduleItemId"] = new SelectList(schedule.ScheduleItems, "Id", "TimeString");
+        ViewData["TeacherId"] = new SelectList(teachers, "Id", "FullName");
+        ViewData["StudentId"] = new SelectList(students, "Id", "FullName");
+    }
 
+    public async Task<IActionResult> OnPostSelectTimeAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        
+        var user = await _userManager.GetUserAsync(User);
+
+        var schedule = await _context.Schedules.FirstAsync(s => s.SchoolId == user.SchoolId);
+        var bookedSchedules = await _context.Bookings
+            .Where(b => b.TeacherId == Model.TeacherId && b.Date == Model.Date)
+            .Select(b => b.ScheduleItemId)
+            .ToListAsync();
+        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.ScheduleId).ToList();
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync(int? scheduleId)
+    {
+        if (scheduleId is null || !ModelState.IsValid)
+        {
             return Page();
         }
 
-        [BindProperty]
-        public Booking Booking { get; set; } = default!;
-        
-        public async Task<IActionResult> OnPostAsync()
+        var user = await _userManager.GetUserAsync(User);
+
+        var booking = new Booking()
         {
-            if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
-            {
-                return Page();
-            }
+            TeacherId = Model.TeacherId,
+            ClientId = user.Id,
+            Date = Model.Date,
+            SchoolId = user.SchoolId.Value,
+            ScheduleItemId = scheduleId.Value
+        };
 
-            _context.Bookings.Add(Booking);
-            await _context.SaveChangesAsync();
+        var isExist = await _context.Bookings.AnyAsync(b =>
+            b.TeacherId == b.TeacherId && 
+            b.ClientId == b.ClientId && 
+            b.Date == booking.Date && 
+            b.ScheduleItemId == booking.ScheduleItemId
+        );
 
-            return RedirectToPage("./Index");
+        if (isExist)
+        {
+            return Page();
         }
+
+        _context.Bookings.Add(booking);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage("/Bookings/Index");
+    }
+
+    public class UserBookingCreateModel
+    {
+        [DisplayName("Дата")]
+        public DateOnly Date { get; set; }
+        
+        [DisplayName("Инструктор")]
+        public string TeacherId { get; set; }
+        
+        [DisplayName("Студент")]
+        public string StudentId { get; set; }
     }
 }

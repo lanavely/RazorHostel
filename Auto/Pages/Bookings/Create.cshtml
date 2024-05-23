@@ -1,66 +1,44 @@
-@page
-@model Auto.Pages.Bookings.CreateModel
+﻿@page
+@using Auto.Data.Entities.Bookings
+@model Auto.Pages.UserBookings.Create
 
 @{
-    ViewData["Title"] = "Создание";
+    ViewData["Title"] = "Забронировать занятие";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h4>Бронирование</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Booking.BookingId" />
             <div class="form-group">
-                <label asp-for="Booking.ClientId" class="control-label"></label>
-                <select asp-for="Booking.ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
-                <span asp-validation-for="Booking.ClientId" class="text-danger"></span>
+                <label asp-for="Model.StudentId" class="control-label"></label>
+                <select asp-for="Model.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                <span asp-validation-for="Model.StudentId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.TeacherId" class="control-label"></label>
-                <select asp-for="Booking.TeacherId" class="form-control" asp-items="ViewBag.TeacherId"></select>
-                <span asp-validation-for="Booking.TeacherId" class="text-danger"></span>
+                <label asp-for="Model.TeacherId" class="control-label"></label>
+                <select asp-for="Model.TeacherId" class="form-control" asp-items="ViewBag.TeacherId"></select>
+                <span asp-validation-for="Model.TeacherId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.SchoolId" class="control-label"></label>
-                <select asp-for="Booking.SchoolId" class="form-control" asp-items="ViewBag.SchoolId"></select>
-                <span asp-validation-for="Booking.SchoolId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Booking.isClosed" /> @Html.DisplayNameFor(model => model.Booking.isClosed)
-                </label>
+                <label asp-for="Model.Date" class="control-label"></label>
+                <input asp-for="Model.Date" class="form-control"/>
+                <span asp-validation-for="Model.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.Comment" class="control-label"></label>
-                <input asp-for="Booking.Comment" class="form-control" />
-                <span asp-validation-for="Booking.Comment" class="text-danger"></span>
+                <input asp-page-handler="selectTime" type="submit" value="Подобрать время" class="btn btn-primary"/>
             </div>
-            <div class="form-group">
-                <label asp-for="Booking.Date" class="control-label"></label>
-                <input asp-for="Booking.Date" class="form-control" />
-                <span asp-validation-for="Booking.Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Booking.ScheduleItem" class="control-label"></label>
-                <select asp-for="Booking.ScheduleItemId" class="form-control" asp-items="ViewBag.ScheduleItemId"></select>
-                <span asp-validation-for="Booking.ScheduleItemId" class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Создать" class="btn btn-primary" />
+            <div class="list-group list-group-horizontal d-inline-flex flex-wrap w-75">
+                @foreach (var item in ViewBag.ScheduleItems ?? Enumerable.Empty<ScheduleItem>())
+                {
+                    <button class="btn btn-primary"
+                            asp-route-scheduleId="@item.Id">
+                        @item.TimeString
+                    </button>
+                }
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-page="./Index">Обратно к списку</a>
-</div>
-
-
-
