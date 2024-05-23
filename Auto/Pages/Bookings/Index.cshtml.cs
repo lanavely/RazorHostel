@@ -47,7 +47,7 @@ namespace Auto.Pages.Bookings
                 bookings.Where(b => b.ClientId == user.Id);
             }
 
-            if (false && await _userManager.IsInRoleAsync(user, Consts.Admin))
+            if (await _userManager.IsInRoleAsync(user, Consts.Admin))
             {
                 bookings.Where(b => b.SchoolId == user.SchoolId);
             }

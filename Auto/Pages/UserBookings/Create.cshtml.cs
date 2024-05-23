@@ -32,13 +32,11 @@ public class Create : PageModel
         var user = await _userManager.GetUserAsync(User);
         
         var teachers = (await _userManager.GetUsersInRoleAsync(Consts.Instructor))
-            .Where(u => u.SchoolId == user.SchoolId)
-            .Select(u => new SelectListItem(u.FullName, u.Id)).ToList();
+            .Where(u => u.SchoolId == user.SchoolId).ToList();
 
         var schedule = await _context.Schedules.FirstAsync(s => s.SchoolId == user.SchoolId);
         
-        ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FullName");
-        ViewData["ScheduleItemId"] = new SelectList(schedule.ScheduleItems, "Id", "TimeString");
+        ViewData["TeacherId"] = new SelectList(teachers, "Id", "FullName");
     }
 
     public async Task<IActionResult> OnPostSelectTimeAsync()
@@ -55,7 +53,7 @@ public class Create : PageModel
             .Where(b => b.TeacherId == Model.TeacherId && b.Date == Model.Date)
             .Select(b => b.ScheduleItemId)
             .ToListAsync();
-        Model.ScheduleItems = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.ScheduleId).ToList();
+        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.ScheduleId).ToList();
 
         return Page();
     }
@@ -78,10 +76,22 @@ public class Create : PageModel
             ScheduleItemId = scheduleId.Value
         };
 
+        var isExist = await _context.Bookings.AnyAsync(b =>
+            b.TeacherId == b.TeacherId && 
+            b.ClientId == b.ClientId && 
+            b.Date == booking.Date && 
+            b.ScheduleItemId == booking.ScheduleItemId
+        );
+
+        if (isExist)
+        {
+            return Page();
+        }
+
         _context.Bookings.Add(booking);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("./Index");
+        return RedirectToPage("/Bookings/Index");
     }
 
     public class UserBookingCreateModel
@@ -91,7 +101,5 @@ public class Create : PageModel
         
         [DisplayName("Инструктор")]
         public string TeacherId { get; set; }
-
-        public List<ScheduleItem>? ScheduleItems { get; set; } = default!;
     }
 }
