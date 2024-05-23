@@ -27,56 +27,33 @@ public class Create : PageModel
 
     [BindProperty] public UserBookingCreateModel Model { get; set; } = new();
     
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(string studentId, string teacherId, DateOnly date)
     {
         var user = await _userManager.GetUserAsync(User);
+        Model.TeacherId = teacherId;
+        Model.StudentId = studentId;
+        Model.Student = await _userManager.FindByIdAsync(studentId);
+        Model.Teacher = await _userManager.FindByIdAsync(teacherId);
 
-        var students = new List<AppUser>();
-
-        if (await _userManager.IsInRoleAsync(user, Consts.Student))
-        {
-           students.Add(user); 
-        }
-        else
-        {
-            students.AddRange((await _userManager.GetUsersInRoleAsync(Consts.Instructor))
-                .Where(u => u.SchoolId == user.SchoolId));
-        }
-        
-        var teachers = (await _userManager.GetUsersInRoleAsync(Consts.Instructor))
-            .Where(u => u.SchoolId == user.SchoolId).ToList();
-
-        ViewData["TeacherId"] = new SelectList(teachers, "Id", "FullName");
-        ViewData["StudentId"] = new SelectList(students, "Id", "FullName");
-    }
-
-    public async Task<IActionResult> OnPostSelectTimeAsync()
-    {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
-        
-        var user = await _userManager.GetUserAsync(User);
-
-        var schedule = await _context.Schedules.FirstAsync(s => s.SchoolId == user.SchoolId);
+        var schedule = await _context.Schedules
+            .Include(s => s.ScheduleItems)
+            .FirstAsync(s => s.SchoolId == user.SchoolId);
         var bookedSchedules = await _context.Bookings
-            .Where(b => b.TeacherId == Model.TeacherId && b.Date == Model.Date)
+            .Where(b => b.TeacherId == teacherId && b.Date == date)
             .Select(b => b.ScheduleItemId)
             .ToListAsync();
-        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.ScheduleId).ToList();
-
-        return Page();
+        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.Id).ToList();
     }
 
     public async Task<IActionResult> OnPostAsync(int? scheduleId)
     {
         if (scheduleId is null || !ModelState.IsValid)
         {
+            ModelState.AddModelError(string.Empty, "Невалидная модель");
             return Page();
         }
 
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _userManager.FindByIdAsync(Model.StudentId);
 
         var booking = new Booking()
         {
@@ -96,6 +73,7 @@ public class Create : PageModel
 
         if (isExist)
         {
+            ModelState.AddModelError(string.Empty, "Время бронирования уже занято");
             return Page();
         }
 
@@ -107,13 +85,17 @@ public class Create : PageModel
 
     public class UserBookingCreateModel
     {
-        [DisplayName("Дата")]
-        public DateOnly Date { get; set; }
+        [DisplayName("Дата")] 
+        public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         
         [DisplayName("Инструктор")]
         public string TeacherId { get; set; }
         
         [DisplayName("Студент")]
         public string StudentId { get; set; }
+        
+        public AppUser? Teacher { get; set; }
+        
+        public AppUser? Student { get; set; }
     }
 }
