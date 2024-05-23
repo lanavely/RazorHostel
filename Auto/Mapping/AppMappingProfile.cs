@@ -10,5 +10,7 @@ public class AppMappingProfile: Profile
     {			
         CreateMap<AppUser, UserEditModel>().ReverseMap();
         CreateMap<AppUser, UserRegisterModel>().ReverseMap();
+        CreateMap<AppUser, AdminUserEditModel>().ReverseMap();
+        CreateMap<AppUser, DetailsUserModel>().ReverseMap();
     }
 }

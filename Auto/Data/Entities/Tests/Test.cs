@@ -1,4 +1,6 @@
-﻿namespace Auto.Data.Entities.Tests;
+﻿using Auto.Enums;
+
+namespace Auto.Data.Entities.Tests;
 
 public class Test
 {
@@ -9,6 +11,8 @@ public class Test
     public int CurrentQuestionNumber { get; set; }
     
     public string? UserId { get; set; }
+
+    public Status PassedStatus { get; set; }
 
     public int TicketNumber { get; set; }
     
