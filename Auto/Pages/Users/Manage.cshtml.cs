@@ -1,5 +1,6 @@
 using Auto.Data;
 using Auto.Data.Entities;
+using Auto.Helpers;
 using Auto.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -50,9 +51,15 @@ public class ManageModel : PageModel
         }
 
         Input = _mapper.Map<AdminUserEditModel>(user);
+        var roles = _roleManager.Roles.Select(r => new
+        {
+            r.Id,
+            r.Name,
+            DisplayName = RoleNameHelper.RoleToString(r.Name)
+        });
         
         ViewData["SchoolId"] = new SelectList(_context.Schools, "SchoolId", "Name");
-        ViewData["RoleName"] = new SelectList(_roleManager.Roles, "Name", "Name");
+        ViewData["RoleName"] = new SelectList(roles, "Name", "DisplayName");
 
         return Page();
     }

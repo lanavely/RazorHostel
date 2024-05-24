@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Auto.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,18 +24,26 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @{
+                            var user = await UserManager.GetUserAsync(User);
+                            var isAdmin = await UserManager.IsInRoleAsync(user, Consts.Admin);
+                            var isInstructor = await UserManager.IsInRoleAsync(user, Consts.Instructor);
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Tests/Index">Тесты</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Bookings/Index">Бронирования</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Users/Index">Пользователи</a>
-                        </li>
+                        @if (isAdmin || isInstructor)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Users/Index">Пользователи</a>
+                            </li>                            
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Schools/Index">Автошколы</a>
-                        </li>
+                        </li>    
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -45,7 +58,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Автошкола - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - Автошкола - <a asp-area="" asp-page="/Privacy">проект</a>
         </div>
     </footer>
 

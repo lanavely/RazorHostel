@@ -34,6 +34,7 @@ public class Create : PageModel
         Model.StudentId = studentId;
         Model.Student = await _userManager.FindByIdAsync(studentId);
         Model.Teacher = await _userManager.FindByIdAsync(teacherId);
+        Model.Date = date;
 
         var schedule = await _context.Schedules
             .Include(s => s.ScheduleItems)
@@ -42,7 +43,7 @@ public class Create : PageModel
             .Where(b => b.TeacherId == teacherId && b.Date == date)
             .Select(b => b.ScheduleItemId)
             .ToListAsync();
-        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.Id).ToList();
+        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.Id).OrderBy(s => s.StartTime).ToList();
     }
 
     public async Task<IActionResult> OnPostAsync(int? scheduleId)
@@ -86,7 +87,7 @@ public class Create : PageModel
     public class UserBookingCreateModel
     {
         [DisplayName("Дата")] 
-        public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly Date { get; set; }
         
         [DisplayName("Инструктор")]
         public string TeacherId { get; set; }

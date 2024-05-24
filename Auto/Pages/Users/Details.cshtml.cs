@@ -1,7 +1,9 @@
+using Auto.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Auto.Data.Entities;
+using Auto.Helpers;
 using Auto.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +15,13 @@ namespace Auto.Pages.Users
     public class DetailsModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public DetailsModel(UserManager<AppUser> userManager, IMapper mapper)
+        public DetailsModel(UserManager<AppUser> userManager, ApplicationDbContext context, IMapper mapper)
         {
             _userManager = userManager;
+            _context = context;
             _mapper = mapper;
         }
 
@@ -30,14 +34,16 @@ namespace Auto.Pages.Users
                 return NotFound();
             }
 
+            var bookings = await _context.Bookings.Where(b => b.ClientId == id || b.TeacherId == id)
+                .Include(b => b.Client)
+                .Include(b => b.Teacher)
+                .Include(b => b.ScheduleItem)
+                .ToListAsync();
+
             var user = await _userManager.Users
                 .Include(u => u.School)
                 .Include(b => b.UserRoles)
                 .Include(b => b.Tests)
-                .Include(u => u.ClientBookings)
-                .ThenInclude(b => b.Teacher)
-                .Include(u => u.ClientBookings)
-                .ThenInclude(b => b.ScheduleItem)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (user == null)
@@ -47,14 +53,18 @@ namespace Auto.Pages.Users
 
             UserModel = _mapper.Map<DetailsUserModel>(user);
             UserModel.RoleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            UserModel.Bookings = bookings;
+
             if (user.Tests.Any())
             {
-                UserModel.Tests = user.Tests.OrderBy(t => t.TicketNumber).Select(t =>
+                UserModel.TestSummaries = user.Tests.OrderBy(t => t.TicketNumber).Select(t =>
                     new TestSummary()
                     {
                         TicketNumber = t.TicketNumber,
                         Status = t.PassedStatus
-                    }).ToList();
+                    })
+                    .OrderBy(t => t.TicketNumber)
+                    .ToList();
             }
 
             return Page();

@@ -19,7 +19,7 @@
         </a>
     }
 </div>
-
+<br/>
 <div class="text-right">
     Вопрос @(Model.TestModel.Test.CurrentQuestionNumber + 1) из @Model.TestModel.Test.Questions.Count
 
@@ -73,7 +73,7 @@
     </a>
 }
 
-@if (Model.TestModel.ShowCloseTest == true)
+@if (Model.TestModel.HasAllAnswers == true)
 {
     if (Model.TestModel.Test.Questions.All(q => q.Answer?.IsCorrect == true))
     {

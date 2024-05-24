@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Auto.Pages.Bookings
 {
-    [Authorize(Roles = $"{Consts.Admin},{Consts.Instructor}")]
+    [Authorize(Roles = Consts.AdminInstructor)]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;

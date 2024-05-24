@@ -20,7 +20,7 @@ namespace Auto.Data.Entities.Bookings
         [DisplayName("Дата")]
         public DateOnly Date { get; set; }
         
-        [DisplayName("Расписание")]
+        [DisplayName("Время")]
         public ScheduleItem? ScheduleItem { get; set; }
 
         [DisplayName("Ученик")]

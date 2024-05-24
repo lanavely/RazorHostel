@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Auto.Data.Entities.Bookings;
+using Auto.Helpers;
 
 namespace Auto.Models;
 
@@ -13,7 +14,10 @@ public class DetailsUserModel: UserModel
     [DisplayName("Автошкола")]
     public string SchoolName { get; set; }
     
-    public List<TestSummary> Tests { get; set; }
+    public List<TestSummary>? TestSummaries { get; set; }
     
-    public List<Booking> Bookings { get; set; }
+    public List<Booking>? Bookings { get; set; }
+
+    [DisplayName("Роль")]
+    public string RoleString => RoleNameHelper.RoleToString(RoleName);
 }

@@ -41,13 +41,6 @@
         </dd>
         
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserModel.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserModel.Email)
-        </dd>
-        
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UserModel.PhoneNumber)
         </dt>
         <dd class="col-sm-10">
@@ -59,13 +52,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UserModel.Email)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserModel.UserName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserModel.UserName)
         </dd>
 
         <dt class="col-sm-2">
@@ -86,16 +72,16 @@
             @Html.DisplayNameFor(model => model.UserModel.RoleName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserModel.RoleName)
+            @Html.DisplayFor(model => model.UserModel.RoleString)
         </dd>
     </dl>
 </div>
-@if (Model.UserModel.Tests.Any())
+@if (Model.UserModel.TestSummaries?.Any() == true)
 {
     <br/>
     <h4>Тесты</h4>
     <div class="list-group list-group-horizontal">
-        @foreach (var test in Model.UserModel.Tests)
+        @foreach (var test in Model.UserModel.TestSummaries)
         {
             <div class="@test.StatusColor list-group-item">
                 @test.TicketNumber
@@ -103,20 +89,13 @@
         }
     </div>
 }
-@if (Model.UserModel.Bookings.Any())
+@if (Model.UserModel.Bookings?.Any() == true)
 {
 <br/>
 <h4>Бронирования</h4>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.UserModel?.Id">Редактировать</a> |
-    <a asp-page="./Index">Обратно к списку</a>
-</div>
 <table class="table">
     <thead>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserModel.Bookings[0].Comment)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.UserModel.Bookings[0].Date)
         </th>
@@ -126,15 +105,15 @@
         <th>
             @Html.DisplayNameFor(model => model.UserModel.Bookings[0].Teacher)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserModel.Bookings[0].Comment)
+        </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     @foreach (var item in Model.UserModel.Bookings) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
@@ -145,9 +124,12 @@
                 @Html.DisplayFor(modelItem => item.Teacher.FullName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
                 <a asp-page="/Booking/Edit" asp-route-id="@item.BookingId">Редактировать</a> |
-                <a asp-page="/Booking//Details" asp-route-id="@item.BookingId">Подробнее</a> |
-                <a asp-page="/Booking//Delete" asp-route-id="@item.BookingId">Удалить</a>
+                <a asp-page="/Booking/Details" asp-route-id="@item.BookingId">Подробнее</a> |
+                <a asp-page="/Booking/Delete" asp-route-id="@item.BookingId">Удалить</a>
             </td>
         </tr>
     }

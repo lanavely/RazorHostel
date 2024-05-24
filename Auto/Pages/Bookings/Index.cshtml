@@ -13,30 +13,30 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].ScheduleItem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].Client)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].Teacher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].School)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bookings[0].Comment)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].ScheduleItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].Client)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].Teacher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].School)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings[0].Comment)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Bookings) {
+    @foreach (var item in Model.Bookings) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -62,6 +62,6 @@
                 <a asp-page="./Delete" asp-route-id="@item.BookingId">Удалить</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

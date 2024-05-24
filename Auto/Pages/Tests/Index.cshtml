@@ -10,10 +10,11 @@
 
 <h2>Выберите номер билета</h2>
 
-<div class="list-group list-group-horizontal d-inline-flex flex-wrap w-100">
+<div class="list-group list-group-horizontal d-flex flex-row flex-wrap">
     @foreach (var ticket in Model.Tickets)
     {
         <a class="@BackgroundHelper.GetColor(ticket.Status) list-group-item list-group-item-action"
+           style="width: 3rem"
            asp-page="./Executing"
            asp-route-ticket="@ticket.TicketNumber"
            asp-route-testId="@ticket.Test?.TestId">

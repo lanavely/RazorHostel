@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Auto.Models;
 
@@ -36,4 +37,7 @@ public class UserModel
         [DataType(DataType.Text)]
         [Display(Name = "Никнейм")]
         public string UserName { get; set; }
+
+        [DisplayName("Фамилия Имя Отчество")]
+        public string FullName => $"{LastName} {FirstName} {Patronymic}";
 }

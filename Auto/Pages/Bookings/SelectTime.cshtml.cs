@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Data.Entities.Bookings;
@@ -64,6 +65,7 @@ public class SelectTime : PageModel
     public class UserBookingCreateModel
     {
         [DisplayName("Дата")] 
+        [DataType(DataType.Date)]
         public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         
         [DisplayName("Инструктор")]

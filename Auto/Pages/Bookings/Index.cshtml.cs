@@ -21,7 +21,7 @@ namespace Auto.Pages.Bookings
         }
 
         public IList<Booking> Bookings { get;set; } = default!;
-
+        
         public async Task OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -35,7 +35,9 @@ namespace Auto.Pages.Bookings
                 .Include(b => b.Client)
                 .Include(b => b.School)
                 .Include(b => b.Teacher)
-                .Include(b => b.ScheduleItem);
+                .Include(b => b.ScheduleItem)
+                .OrderByDescending(b => b.Date)
+                .ThenBy(b => b.ScheduleItem.StartTime);
  
             if (await _userManager.IsInRoleAsync(user, Consts.Instructor))
             {

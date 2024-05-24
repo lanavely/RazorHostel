@@ -1,6 +1,7 @@
 using Auto.Data;
 using Auto.Data.Entities;
 using Auto.Data.Entities.Tests;
+using Auto.Enums;
 using Auto.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +65,13 @@ namespace Auto.Pages.Tests
             }
 
             TestModel.CurrentQuestion.AnswerId = answerId;
+            if (TestModel.HasAllAnswers == true)
+            {
+                TestModel.Test.PassedStatus = TestModel.Test.Questions.All(q => q.Answer?.IsCorrect == true)
+                    ? Status.Success
+                    : Status.Fail;
+            }
+
             _dbContext.Tests.Update(TestModel.Test);
             await _dbContext.SaveChangesAsync();
             
@@ -92,7 +100,7 @@ namespace Auto.Pages.Tests
         {
             private Test? _test;
 
-            public bool? ShowCloseTest => _test?.Questions?.All(q => q.AnswerId is not null);
+            public bool? HasAllAnswers => _test?.Questions?.All(q => q.AnswerId is not null);
 
             public int TestId { get; set; }
 
