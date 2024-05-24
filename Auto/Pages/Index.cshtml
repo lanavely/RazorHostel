@@ -4,7 +4,32 @@
     ViewData["Title"] = "Автошкола";
 }
 
-
 <div class="text-center">
     <h1 class="display-4">Добро пожаловать!</h1>
+    <h3 class="display-4">Автошкола  @Model.School?.Name</h3>
+    <br/>
+    <div>
+        @Model.School?.Description
+    </div>
+    <div>
+        @Model.School?.Address
+    </div>
+    <div>
+        @Model.School?.Email @Model.School?.PhoneNumber
+    </div>
+    <br/>
+    <div>
+        <a class="btn btn-success btn-lg m-1"
+           asp-page="/Tests/Index">
+            Билеты ПДД
+        </a>
+        <a class="btn btn-primary btn-lg m-1"
+           asp-page="/Bookings/SelectTime">
+            Забронировать занятие
+        </a>
+        <a class="btn btn-secondary btn-lg m-1"
+           asp-page="/Bookings/Index">
+            Просмотреть занятия
+        </a>
+    </div>
 </div>

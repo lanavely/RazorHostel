@@ -37,16 +37,22 @@ public class RegisterModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        var currentUser = await _userManager.GetUserAsync(User);
         
         if (!ModelState.IsValid)
             return Page();
-       
+
         var user = _mapper.Map<AppUser>(Input);
 
         var result = await _userManager.CreateAsync(user, Input.Password);
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, Consts.Student);
+            if (currentUser is not null)
+            {
+                return RedirectToPage("/Users/Index");
+            }
+
             await _signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToPage("/Index");
         }
