@@ -26,8 +26,13 @@
                     <ul class="navbar-nav flex-grow-1">
                         @{
                             var user = await UserManager.GetUserAsync(User);
-                            var isAdmin = await UserManager.IsInRoleAsync(user, Consts.Admin);
-                            var isInstructor = await UserManager.IsInRoleAsync(user, Consts.Instructor);
+                            var isAdmin = false;
+                            var isInstructor = false;
+                            if (user != null)
+                            {
+                                isAdmin = await UserManager.IsInRoleAsync(user, Consts.Admin);
+                                isInstructor = await UserManager.IsInRoleAsync(user, Consts.Instructor);    
+                            }
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-route-ticket="1" asp-page="/Tests/Index">Тесты</a>
