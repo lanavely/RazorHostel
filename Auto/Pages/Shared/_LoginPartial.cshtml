@@ -10,10 +10,10 @@
 {
     <li class="nav-item align-content-center">
         @{
-            var currentuser = await UserManager.GetUserAsync(User);
-            var roles = await UserManager.GetRolesAsync(currentuser);
+            var currentUser = await UserManager.GetUserAsync(User);
+            var roles = await UserManager.GetRolesAsync(currentUser);
         }
-        <a  class="nav-link text-dark" asp-page="/Account/Manage" title="Manage">@currentuser?.FullName. Роль - @RoleNameHelper.RoleToString(roles.FirstOrDefault())</a>
+        <a  class="nav-link text-dark" asp-page="/Account/Manage" title="Manage">@currentUser?.FullName. Роль - @RoleNameHelper.RoleToString(roles.FirstOrDefault())</a>
     </li>
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" >
@@ -23,9 +23,6 @@
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-page="/Account/Register">Регистрация</a>
-    </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-page="/Account/Login">Вход</a>
     </li>

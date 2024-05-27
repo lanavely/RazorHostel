@@ -43,7 +43,9 @@ public class Create : PageModel
             .Where(b => b.TeacherId == teacherId && b.Date == date)
             .Select(b => b.ScheduleItemId)
             .ToListAsync();
-        ViewData["ScheduleItems"] = schedule.ScheduleItems.ExceptBy(bookedSchedules, c => c.Id).OrderBy(s => s.StartTime).ToList();
+        ViewData["ScheduleItems"] = schedule.ScheduleItems
+            .ExceptBy(bookedSchedules, c => c.Id)
+            .OrderBy(s => s.StartTime).ToList();
     }
 
     public async Task<IActionResult> OnPostAsync(int? scheduleId)

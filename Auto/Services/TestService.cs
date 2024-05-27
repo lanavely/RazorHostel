@@ -15,35 +15,6 @@ public class TestService
         _context = context;
     }
 
-    public async Task<Test> GetTestAsync()
-    {
-        var questions = await _context.Questions
-            .Include(c => c.Category)
-            .Include(c => c.AnswerOptions)
-            .GroupBy(e => e.CategoryId)
-            .Select(c => new
-            {
-                c.Key,
-                Questions = c.OrderBy(r => Guid.NewGuid()).Take(5)
-            })
-            .SelectMany(c => c.Questions)
-            .Select(q => new TestQuestion()
-            {
-                Question = q
-            })
-            .ToListAsync();
-
-        var test = new Test()
-        {
-            Questions = questions
-        };
-
-        //_context.Tests.Add(test);
-        //await _context.SaveChangesAsync();
-
-        return test;
-    }
-
     public async Task<Test> CreateTestForTicket(int ticketNumber, AppUser user)
     {
         var questions = await _context.Questions
@@ -95,10 +66,5 @@ public class TestService
             .FirstAsync();
 
         return test;
-    }
-    
-    public void SelectQuestion(TestQuestion question, int idAnswer)
-    {
-        question.Answer = question.Question.AnswerOptions.First(o => o.AnswerId == idAnswer);
     }
 }
