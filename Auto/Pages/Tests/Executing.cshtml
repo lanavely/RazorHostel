@@ -29,10 +29,10 @@
     @if (Model.TestModel.CurrentQuestion.Question.Image is not null)
     {
         <div>
-            <img class="w-75" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.TestModel.CurrentQuestion.Question.Image.Data))" alt="image"/>
+            <img class="w-100" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.TestModel.CurrentQuestion.Question.Image.Data))" alt="image"/>
         </div>
     }
-    <div class="w-75">
+    <div class="w-100">
         @Model.TestModel.CurrentQuestion.Question.Text
     </div>
 </div>
@@ -48,7 +48,7 @@
         @foreach (var item in Model.TestModel.CurrentQuestion.Question.AnswerOptions)
         {
             <button
-                class="list-group-item w-75 list-group-item-action text-wrap @(BackgroundHelper.GetColor(Model.TestModel.CurrentQuestion, item))"
+                class="list-group-item w-100 list-group-item-action text-wrap @(BackgroundHelper.GetColor(Model.TestModel.CurrentQuestion, item))"
                 type="submit"
                 asp-page-handler="select"
                 asp-route-answerId="@item.AnswerId"
